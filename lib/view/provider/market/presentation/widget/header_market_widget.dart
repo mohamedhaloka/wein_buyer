@@ -14,8 +14,8 @@ import 'package:wein_buyer/view/provider/market/presentation/widget/edit_title_b
 import 'package:wein_buyer/view/provider/settingsMarket/presentation/controller/setting_market_cubit.dart';
 import 'package:wein_buyer/view/provider/settingsMarket/presentation/screen/settings_market_screen.dart';
 import 'package:wein_buyer/widgets/custom_button_with_icon.dart';
-import 'package:wein_buyer/widgets/custom_network_image.dart';
 import 'package:wein_buyer/widgets/space_width.dart';
+
 import '../../../../../../widgets/my_painter.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../controller/market_cubit.dart';
@@ -26,7 +26,7 @@ class HeaderMarketWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSizes.screenHeight * 0.3,
+      height: AppSizes.screenHeight * 0.35,
       width: AppSizes.screenWidth,
       child: Stack(
         children: [
@@ -38,22 +38,39 @@ class HeaderMarketWidget extends StatelessWidget {
                 )
               : SizedBox(
                   width: AppSizes.screenWidth,
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        MarketCubit.of(context).profileModel!.user!.header ??
-                            '',
-                    fit: BoxFit.fill,
-                  ),
+                  height: double.infinity,
+                  child: (MarketCubit.of(context)
+                                  .profileModel
+                                  ?.user
+                                  ?.localHeader
+                                  ?.path ??
+                              '')
+                          .isNotEmpty
+                      ? Image.file(
+                          MarketCubit.of(context)
+                              .profileModel!
+                              .user!
+                              .localHeader!,
+                          fit: BoxFit.cover,
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: MarketCubit.of(context)
+                                  .profileModel!
+                                  .user!
+                                  .header ??
+                              '',
+                          fit: BoxFit.cover,
+                        ),
                 ),
           Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
               width: AppSizes.screenWidth,
-              height: AppSizes.screenHeight * 0.2,
+              height: AppSizes.screenHeight * 0.22,
               child: Stack(
                 children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
+                  Positioned(
+                    bottom: 0,
                     child: Stack(
                       children: [
                         ClipPath(
@@ -84,7 +101,7 @@ class HeaderMarketWidget extends StatelessWidget {
                                   child: Icon(
                                     Icons.camera_alt_outlined,
                                     color: AppColors.primaryColor,
-                                    size: 25.sp,
+                                    size: 20.sp,
                                   ),
                                 ),
                               ),
@@ -102,35 +119,66 @@ class HeaderMarketWidget extends StatelessWidget {
                           alignment: Alignment.topCenter,
                           child: Stack(
                             children: [
-                              Container(
+                              SizedBox(
                                 height:
-                                    AppSizes.getProportionateScreenHeight(95),
+                                    AppSizes.getProportionateScreenHeight(105),
                                 width:
-                                    AppSizes.getProportionateScreenHeight(95),
-                                decoration: MarketCubit.of(context)
+                                    AppSizes.getProportionateScreenHeight(105),
+                              ),
+                              if ((MarketCubit.of(context)
+                                          .profileModel
+                                          ?.user
+                                          ?.localImage
+                                          ?.path ??
+                                      '')
+                                  .isNotEmpty) ...[
+                                Container(
+                                  clipBehavior: Clip.hardEdge,
+                                  height:
+                                      AppSizes.getProportionateScreenHeight(95),
+                                  width:
+                                      AppSizes.getProportionateScreenHeight(95),
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.file(
+                                    MarketCubit.of(context)
                                         .profileModel!
                                         .user!
-                                        .image!
-                                        .isEmpty
-                                    ? const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                AppAssets.imageProfile)))
-                                    : BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: NetworkImage(
-                                                MarketCubit.of(context)
-                                                        .profileModel!
-                                                        .user!
-                                                        .image ??
-                                                    ''))),
-                              ),
+                                        .localImage!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ] else ...[
+                                Container(
+                                  height:
+                                      AppSizes.getProportionateScreenHeight(95),
+                                  width:
+                                      AppSizes.getProportionateScreenHeight(95),
+                                  decoration: MarketCubit.of(context)
+                                          .profileModel!
+                                          .user!
+                                          .image!
+                                          .isEmpty
+                                      ? const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  AppAssets.imageProfile)))
+                                      : BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: NetworkImage(
+                                                  MarketCubit.of(context)
+                                                          .profileModel!
+                                                          .user!
+                                                          .image ??
+                                                      ''))),
+                                ),
+                              ],
                               Positioned(
-                                bottom:
-                                    AppSizes.getProportionateScreenHeight(-8),
+                                bottom: 0,
                                 right: 0,
                                 left: 0,
                                 child: InkWell(
@@ -138,20 +186,17 @@ class HeaderMarketWidget extends StatelessWidget {
                                     MarketCubit.of(context)
                                         .selectedImageMarket(context);
                                   },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color.fromRGBO(253, 243, 243, 1),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5),
-                                        child: Icon(
-                                          Icons.camera_alt_outlined,
-                                          color: AppColors.primaryColor,
-                                          size: 25.sp,
-                                        ),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color.fromRGBO(253, 243, 243, 1),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: Icon(
+                                        Icons.camera_alt_outlined,
+                                        color: AppColors.primaryColor,
+                                        size: 20.sp,
                                       ),
                                     ),
                                   ),
@@ -184,6 +229,7 @@ class HeaderMarketWidget extends StatelessWidget {
                                   icon: const Icon(
                                     Icons.edit_outlined,
                                     color: AppColors.primaryColor,
+                                    size: 18,
                                   ),
                                   onPressed: () {
                                     showModalBottomSheet(
@@ -258,7 +304,7 @@ class HeaderMarketWidget extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: AppSizes.getProportionateScreenHeight(40),
+            top: AppSizes.getProportionateScreenHeight(45),
             child: Container(
               width: AppSizes.screenWidth,
               padding: EdgeInsets.symmetric(
@@ -286,7 +332,7 @@ class HeaderMarketWidget extends StatelessWidget {
                             },
                             child: Container(
                               padding: EdgeInsets.all(
-                                AppSizes.getProportionateScreenHeight(8),
+                                AppSizes.getProportionateScreenHeight(5),
                               ),
                               decoration: const BoxDecoration(
                                 color: Colors.white,
@@ -294,6 +340,7 @@ class HeaderMarketWidget extends StatelessWidget {
                               ),
                               child: const Icon(
                                 Icons.share,
+                                size: 20,
                                 color: AppColors.fontColor,
                               ),
                             ),
@@ -304,10 +351,11 @@ class HeaderMarketWidget extends StatelessWidget {
                                 .translate(),
                             icon: Icons.settings,
                             radius: 25,
+                            paddingHorizontal: 8,
                             colorIcon: AppColors.fontColor,
                             fontColor: AppColors.fontColor,
                             buttonColor: Colors.white,
-                            paddingVertical: 7,
+                            paddingVertical: 5,
                             onPress: () {
                               MagicRouter.navigateTo(
                                 const SettingsMarketScreen(),

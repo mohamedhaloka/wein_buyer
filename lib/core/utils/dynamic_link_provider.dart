@@ -4,6 +4,7 @@ import 'package:wein_buyer/view/user/market_details/presentation/screen/market_d
 import 'package:wein_buyer/view/user/productDetails/presentation/screen/product_details_screen.dart';
 
 class DynamicLinkProvider {
+  static bool checked = false;
   Future<String> createLink({required bool pro, required String id}) async {
     final String url = "https://com.ezygo?pro=$pro&id=$id";
     final DynamicLinkParameters parameters = DynamicLinkParameters(

@@ -20,23 +20,20 @@ class MarketBody extends StatelessWidget {
       child: BlocBuilder<MarketCubit, MarketState>(
         builder: (context, state) {
           final marketCubit = MarketCubit.of(context);
-          return BlocBuilder<MarketCubit, MarketState>(
-            builder: (context, state) {
-              return MarketCubit.of(context).profileModel == null
-                  ? const LoadingIndicator()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const HeaderMarketWidget(),
-                        const TabSectionsWidget(),
-                        SpaceH(inputHeigth: 10),
-                        marketCubit.tabMarket == TabMarket.marketDetails
-                            ? const MarketDetailsWidget()
-                            : const SectionsAndProductsWidget(),
-                      ],
-                    );
-            },
-          );
+
+          return MarketCubit.of(context).profileModel == null
+              ? const LoadingIndicator()
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    HeaderMarketWidget(),
+                    const TabSectionsWidget(),
+                    SpaceH(inputHeigth: 10),
+                    marketCubit.tabMarket == TabMarket.marketDetails
+                        ? const MarketDetailsWidget()
+                        : const SectionsAndProductsWidget(),
+                  ],
+                );
         },
       ),
     );

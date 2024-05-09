@@ -25,22 +25,25 @@ class MarketDetailsWidget extends StatelessWidget {
                     height: AppSizes.screenHeight * 0.5,
                     child: const LoadingIndicator(),
                   )
-                : Column(
-                    children: [
-                      AboutUsWidget(
-                        profileModel: MarketCubit.of(context).profileModel!,
-                      ),
-                      SpaceH(inputHeigth: 10),
-                      CurrencyWidget(
-                        profileModel: MarketCubit.of(context).profileModel!,
-                      ),
-                      SpaceH(inputHeigth: 10),
-                      OurLocationWidget(
-                        profileModel: MarketCubit.of(context).profileModel!,
-                      ),
-                      SpaceH(inputHeigth: 10),
-                      const OurRatingWidget(),
-                    ],
+                : Padding(
+                    padding: const EdgeInsets.only(bottom: 65),
+                    child: Column(
+                      children: [
+                        AboutUsWidget(
+                          profileModel: MarketCubit.of(context).profileModel!,
+                        ),
+                        SpaceH(inputHeigth: 10),
+                        CurrencyWidget(
+                          profileModel: MarketCubit.of(context).profileModel!,
+                        ),
+                        SpaceH(inputHeigth: 10),
+                        OurLocationWidget(
+                          profileModel: MarketCubit.of(context).profileModel!,
+                        ),
+                        SpaceH(inputHeigth: 10),
+                        const OurRatingWidget(),
+                      ],
+                    ),
                   );
           },
         ),

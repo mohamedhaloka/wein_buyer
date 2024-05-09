@@ -1,13 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/utils/app_colors.dart';
-import 'package:wein_buyer/core/utils/dynamic_link_provider.dart';
 import 'package:wein_buyer/view/provider/settingsMarket/presentation/controller/setting_market_cubit.dart';
 import 'package:wein_buyer/view/provider/utils/presentation/controller/utils_cubit.dart';
+
 import 'core/appStorage/app_storage.dart';
 import 'core/blocks/lang_cubit/lang_cubit.dart';
 import 'core/localization/set_localization.dart';
@@ -20,7 +19,6 @@ import 'view/user/favorites/presentation/controller/favorites_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await DynamicLinkProvider().initDynamicLink();
   ServicesLocator().init();
   AppStorage.init();
   runApp(const MyApp());

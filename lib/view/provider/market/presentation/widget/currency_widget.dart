@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/localization/localization_methods.dart';
+
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/app_sizes.dart';
 import '../../../../../../widgets/space_width.dart';
@@ -12,7 +13,8 @@ import '../controller/market_cubit.dart';
 import 'edit_currency_bottom_sheet.dart';
 
 class CurrencyWidget extends StatelessWidget {
-  const CurrencyWidget({Key? key, required this.profileModel}) : super(key: key);
+  const CurrencyWidget({Key? key, required this.profileModel})
+      : super(key: key);
 
   final Profile profileModel;
 
@@ -22,13 +24,16 @@ class CurrencyWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            const TabWidget(),
+            const TabWidget(
+              height: 35,
+              width: 4,
+            ),
             SpaceW(inputWidth: 20),
             Text(
               tr(context, AppStrings.changeCurrency),
               style: TextStyle(
                 color: AppColors.fontColor,
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -36,6 +41,7 @@ class CurrencyWidget extends StatelessWidget {
               icon: const Icon(
                 Icons.edit_outlined,
                 color: AppColors.primaryColor,
+                size: 18,
               ),
               onPressed: () {
                 showModalBottomSheet(

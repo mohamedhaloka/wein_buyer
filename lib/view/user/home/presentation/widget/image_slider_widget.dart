@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/utils/app_sizes.dart';
 
-import '../../../../../../../core/utils/app_assets.dart';
-
 class ImageSliderWidget extends StatefulWidget {
   const ImageSliderWidget({Key? key, required this.slider}) : super(key: key);
 
@@ -24,9 +22,17 @@ class _ImageSliderWidgetState extends State<ImageSliderWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        Container(
           height: AppSizes.screenHeight * 0.2,
           width: AppSizes.screenWidth,
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+              offset: const Offset(0, 0),
+              spreadRadius: 6,
+              blurRadius: 8,
+              color: Colors.grey.withOpacity(.3),
+            )
+          ]),
           child: CarouselSlider(
             options: CarouselOptions(
               viewportFraction: 1,
@@ -52,16 +58,16 @@ class _ImageSliderWidgetState extends State<ImageSliderWidget> {
             return GestureDetector(
               onTap: () => _controller.animateToPage(entry.key),
               child: Container(
-                width: 12.0.sp,
-                height: 12.0.sp,
+                width: 8.0.sp,
+                height: 8.0.sp,
                 margin:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: (Theme.of(context).brightness == Brightness.dark
                       ? Colors.white
                       : _current == entry.key
-                          ? Colors.blue
+                          ? Colors.black
                           : Colors.black26),
                 ),
               ),

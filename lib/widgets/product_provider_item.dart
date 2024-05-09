@@ -82,24 +82,11 @@ class ProductItem extends StatelessWidget {
                   SpaceH(inputHeigth: 2),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.location_on,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        productData.distance ?? '',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
                       Row(
                         children: [
                           Text(
-                            (productData.priceAfterDiscount ?? 0.0).toString(),
+                            (productData.priceAfterDiscount ?? 0.0)
+                                .toStringAsFixed(1),
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
@@ -150,14 +137,20 @@ class ProductItem extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: IconButton(
-              icon: const Icon(
-                Icons.more_vert,
-                color: Colors.white,
+              borderRadius: const BorderRadiusDirectional.only(
+                topStart: Radius.circular(10),
+                bottomEnd: Radius.circular(10),
               ),
-              onPressed: () {
+            ),
+            child: InkWell(
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
+                ),
+              ),
+              onTap: () {
                 showModalBottomSheet<void>(
                   context: context,
                   isDismissible: false,

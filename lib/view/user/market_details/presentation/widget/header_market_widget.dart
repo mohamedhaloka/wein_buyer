@@ -6,6 +6,7 @@ import 'package:wein_buyer/core/utils/app_colors.dart';
 import 'package:wein_buyer/core/utils/app_sizes.dart';
 import 'package:wein_buyer/widgets/space_height.dart';
 import 'package:wein_buyer/widgets/space_width.dart';
+
 import '../../../../../../../widgets/my_painter.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../productDetails/presentation/controller/product_details_cubit.dart';
@@ -27,7 +28,7 @@ class HeaderMarketWidget extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
           ),
           PositionedDirectional(
-            top: AppSizes.getProportionateScreenHeight(30),
+            top: AppSizes.getProportionateScreenHeight(40),
             start: AppSizes.getProportionateScreenWidth(20),
             child: InkWell(
               onTap: () => Navigator.of(context).pop(),

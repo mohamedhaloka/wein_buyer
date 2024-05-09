@@ -22,10 +22,11 @@ class HomeScreen extends StatelessWidget {
           create: (context) => HomeCubit(sl())..getHomeData(),
         ),
         BlocProvider(
-          create: (context) => ProductsCubit(sl(),sl(),sl(),sl(),sl())..getProductBySubCategory(0),
+          create: (context) => ProductsCubit(sl(), sl(), sl(), sl(), sl())
+            ..getProductBySubCategory(0),
         ),
       ],
-      child: Scaffold(
+      child: const Scaffold(
         body: HomeBody(),
       ),
     );

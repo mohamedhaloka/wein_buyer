@@ -20,7 +20,7 @@ class OfferSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSizes.getProportionateScreenHeight(310),
+      height: AppSizes.getProportionateScreenHeight(302),
       child: Column(
         children: [
           Container(

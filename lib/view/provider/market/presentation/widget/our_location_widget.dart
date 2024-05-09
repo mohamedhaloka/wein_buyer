@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wein_buyer/core/appStorage/app_storage.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
-import 'package:wein_buyer/core/location/LocationAddressImports.dart';
 import 'package:wein_buyer/core/models/profile_provider_model.dart';
 import 'package:wein_buyer/core/router/router.dart';
 import 'package:wein_buyer/core/utils/app_assets.dart';
@@ -10,16 +8,15 @@ import 'package:wein_buyer/view/provider/market/presentation/controller/market_c
 import 'package:wein_buyer/view/provider/market/presentation/screen/location_market_screen.dart';
 import 'package:wein_buyer/widgets/space_height.dart';
 
-import '../../../../../../core/models/profile_model.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/app_sizes.dart';
 import '../../../../../../widgets/space_width.dart';
 import '../../../../../../widgets/tab_widget.dart';
 import '../../../../../core/utils/app_strings.dart';
-import 'edit_market_details_bottom_sheet.dart';
 
 class OurLocationWidget extends StatelessWidget {
-  const OurLocationWidget({Key? key, required this.profileModel}) : super(key: key);
+  const OurLocationWidget({Key? key, required this.profileModel})
+      : super(key: key);
 
   final Profile profileModel;
 
@@ -29,13 +26,16 @@ class OurLocationWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            const TabWidget(),
+            const TabWidget(
+              height: 35,
+              width: 4,
+            ),
             SpaceW(inputWidth: 20),
             Text(
               AppStrings.ourLocationWidget.translate(),
               style: TextStyle(
                 color: AppColors.fontColor,
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -43,6 +43,7 @@ class OurLocationWidget extends StatelessWidget {
               icon: const Icon(
                 Icons.edit_outlined,
                 color: AppColors.primaryColor,
+                size: 18,
               ),
               onPressed: () {
                 MarketCubit.of(context).onLocationClick(context);
@@ -75,6 +76,7 @@ class OurLocationWidget extends StatelessWidget {
                   const Icon(
                     Icons.location_on,
                     color: Colors.grey,
+                    size: 18,
                   ),
                   Expanded(
                     child: Text(
@@ -105,11 +107,12 @@ class OurLocationWidget extends StatelessWidget {
                       alignment: Alignment.center,
                       child: InkWell(
                         onTap: () {
-                          double lat = double.parse(
-                              profileModel.user!.lat ?? '0.0');
-                          double lng = double.parse(
-                              profileModel.user!.lng ?? '0.0');
-                          MagicRouter.navigateTo(LocationMarketScreen(lat: lat, lng: lng));
+                          double lat =
+                              double.parse(profileModel.user!.lat ?? '0.0');
+                          double lng =
+                              double.parse(profileModel.user!.lng ?? '0.0');
+                          MagicRouter.navigateTo(
+                              LocationMarketScreen(lat: lat, lng: lng));
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(

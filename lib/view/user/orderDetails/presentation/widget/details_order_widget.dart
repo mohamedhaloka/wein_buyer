@@ -1,15 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
+import 'package:wein_buyer/core/localization/localization_methods.dart';
 import 'package:wein_buyer/view/user/myOrders/presentation/controller/my_orders_cubit.dart';
 import 'package:wein_buyer/view/user/orderDetails/presentation/widget/bottom_sheet_add_rate_to_product_widget.dart';
 import 'package:wein_buyer/widgets/space_height.dart';
 
 import '../../../../../../../core/models/orders_model.dart';
-import '../../../../../../../core/utils/app_assets.dart';
 import '../../../../../../../core/utils/app_colors.dart';
 import '../../../../../../../core/utils/app_sizes.dart';
 import '../../../../../../../widgets/space_width.dart';
@@ -91,7 +90,7 @@ class DetailsOrderWidget extends StatelessWidget {
                                   : Row(
                                       children: [
                                         Text(
-                                          '${order.items![index].quantity ?? ''} قطع . ${order.items![index].details!.size ?? ''}',
+                                          '${order.items![index].quantity ?? ''} ${tr(context, 'items')} . ${order.items![index].details!.size ?? ''}',
                                           style: TextStyle(
                                             color: AppColors.fontColor,
                                             fontWeight: FontWeight.bold,

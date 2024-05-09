@@ -9,6 +9,7 @@ import 'package:wein_buyer/core/utils/app_sizes.dart';
 import 'package:wein_buyer/view/provider/market/presentation/controller/market_cubit.dart';
 import 'package:wein_buyer/widgets/space_width.dart';
 import 'package:wein_buyer/widgets/tab_widget.dart';
+
 import '../../../../../../widgets/loading_indicator.dart';
 import '../../../../../../widgets/product_provider_item.dart';
 import '../../../../../core/utils/app_strings.dart';
@@ -45,7 +46,8 @@ class SectionsAndProductsWidget extends StatelessWidget {
                                   (index) => Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal:
-                                          AppSizes.getProportionateScreenWidth(5),
+                                          AppSizes.getProportionateScreenWidth(
+                                              5),
                                     ),
                                     child: InkWell(
                                       onTap: () => MarketCubit.of(context)
@@ -103,13 +105,15 @@ class SectionsAndProductsWidget extends StatelessWidget {
                 return state is GetProductsLoading
                     ? const LoadingIndicator()
                     : listOfProduct.isEmpty
-                        ?  Center(child: Text(AppStrings.sectionsAndProductsWidget.translate()))
+                        ? Center(
+                            child: Text(AppStrings.sectionsAndProductsWidget
+                                .translate()))
                         : GridView.builder(
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               mainAxisExtent:
-                                  AppSizes.getProportionateScreenHeight(300),
+                                  AppSizes.getProportionateScreenHeight(260),
                             ),
                             itemCount: listOfProduct.length,
                             itemBuilder: (ctx, index) {

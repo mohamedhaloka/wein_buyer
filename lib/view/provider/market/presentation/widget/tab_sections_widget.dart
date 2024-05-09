@@ -22,82 +22,82 @@ class TabSectionsWidget extends StatelessWidget {
         return Container(
           width: AppSizes.screenWidth,
           color: AppColors.transparntColor51,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: AppSizes.getProportionateScreenHeight(10),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    marketCubit.changeTabButtons('details');
-                    MarketCubit.of(context).getProfileData();
-                    MarketCubit.of(context).getMyRates();
-                  },
-                  child: SizedBox(
-                    width: AppSizes.getProportionateScreenWidth(90),
-                    child: Column(
-                      children: [
-                        Text(
-                          AppStrings.tabSectionsWidget.translate(),
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                            color:
-                                marketCubit.tabMarket == TabMarket.marketDetails
-                                    ? AppColors.primaryColor
-                                    : AppColors.GrayColor161,
-                          ),
+          padding: const EdgeInsets.only(top: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  marketCubit.changeTabButtons('details');
+                  MarketCubit.of(context).getProfileData();
+                  MarketCubit.of(context).getMyRates();
+                },
+                child: SizedBox(
+                  width: AppSizes.getProportionateScreenWidth(130),
+                  child: Column(
+                    children: [
+                      Text(
+                        AppStrings.tabSectionsWidget.translate(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              marketCubit.tabMarket == TabMarket.marketDetails
+                                  ? AppColors.primaryColor
+                                  : AppColors.GrayColor161,
                         ),
-                        SpaceH(inputHeigth: 10),
-                        marketCubit.tabMarket == TabMarket.marketDetails
-                            ? Container(
-                                height:
-                                    AppSizes.getProportionateScreenHeight(2),
-                                color: AppColors.primaryColor,
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
+                      ),
+                      SpaceH(inputHeigth: 10),
+                      marketCubit.tabMarket == TabMarket.marketDetails
+                          ? Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              height: AppSizes.getProportionateScreenHeight(2),
+                              color: AppColors.primaryColor,
+                            )
+                          : const SizedBox(),
+                    ],
                   ),
                 ),
-                SpaceW(inputWidth: 20),
-                InkWell(
-                  onTap: () async{
-                    marketCubit.changeTabButtons('products');
-                    MarketCubit.of(context).getAllCategories();
-                    MarketCubit.of(context).getProducts(0);
-                  },
-                  child: SizedBox(
-                    width: AppSizes.getProportionateScreenWidth(130),
-                    child: Column(
-                      children: [
-                        Text(
-                          AppStrings.proudestTabSectionsWidget.translate(),
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                            color: marketCubit.tabMarket ==
-                                    TabMarket.sectionsAndProducts
-                                ? AppColors.primaryColor
-                                : AppColors.GrayColor161,
-                          ),
+              ),
+              SpaceW(inputWidth: 20),
+              InkWell(
+                onTap: () async {
+                  marketCubit.changeTabButtons('products');
+                  MarketCubit.of(context).getAllCategories();
+                  MarketCubit.of(context).getProducts(0);
+                },
+                child: SizedBox(
+                  width: AppSizes.getProportionateScreenWidth(130),
+                  child: Column(
+                    children: [
+                      Text(
+                        AppStrings.proudestTabSectionsWidget.translate(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color: marketCubit.tabMarket ==
+                                  TabMarket.sectionsAndProducts
+                              ? AppColors.primaryColor
+                              : AppColors.GrayColor161,
                         ),
-                        SpaceH(inputHeigth: 10),
-                        marketCubit.tabMarket == TabMarket.sectionsAndProducts
-                            ? Container(
-                                height:
-                                    AppSizes.getProportionateScreenHeight(2),
-                                color: AppColors.primaryColor,
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
+                      ),
+                      SpaceH(inputHeigth: 10),
+                      marketCubit.tabMarket == TabMarket.sectionsAndProducts
+                          ? Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              height: AppSizes.getProportionateScreenHeight(2),
+                              color: AppColors.primaryColor,
+                            )
+                          : const SizedBox(),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

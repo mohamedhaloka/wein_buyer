@@ -97,22 +97,26 @@ class ProductItem extends StatelessWidget {
                     Positioned(
                       right: 0,
                       top: 0,
-                      child: FavoriteButton(
-                        isFavorite: product.inFavorite,
-                        iconSize: 30.sp,
-                        valueChanged: (bool value) {
-                          if (value) {
-                            FavoritesCubit.of(context)
-                                .addFavoriteItem(product.id!);
-                          } else {
-                            FavoritesCubit.of(context)
-                                .removeFavoriteItem(product.id!);
-                            FavoritesCubit.of(context)
-                                .listOfFavorites
-                                .removeWhere(
-                                    (element) => element.id == product.id);
-                          }
-                        },
+                      child: CircleAvatar(
+                        radius: 13,
+                        backgroundColor: Colors.white,
+                        child: FavoriteButton(
+                          isFavorite: product.inFavorite,
+                          iconSize: 15.sp,
+                          valueChanged: (bool value) {
+                            if (value) {
+                              FavoritesCubit.of(context)
+                                  .addFavoriteItem(product.id!);
+                            } else {
+                              FavoritesCubit.of(context)
+                                  .removeFavoriteItem(product.id!);
+                              FavoritesCubit.of(context)
+                                  .listOfFavorites
+                                  .removeWhere(
+                                      (element) => element.id == product.id);
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ],

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'currencies_model.dart';
 
 class ProfileModel {
@@ -48,6 +50,16 @@ class Profile {
     }
     return data;
   }
+
+  Profile copyWith({
+    User? user,
+    Orders? orders,
+  }) {
+    return Profile(
+      user: user ?? this.user,
+      orders: orders ?? this.orders,
+    );
+  }
 }
 
 class User {
@@ -72,6 +84,8 @@ class User {
   num? balance;
   num? rate;
   Currency? currency;
+  File? localImage;
+  File? localHeader;
 
   User({
     this.id,
@@ -85,6 +99,8 @@ class User {
     this.header,
     this.verified,
     this.canEdit,
+    this.localImage,
+    this.localHeader,
     this.location,
     this.lat,
     this.lng,
@@ -96,6 +112,58 @@ class User {
     this.rate,
     this.currency,
   });
+
+  User copyWith({
+    int? id,
+    String? name,
+    String? email,
+    String? phone,
+    String? storeName,
+    String? description,
+    String? slug,
+    String? image,
+    String? header,
+    bool? verified,
+    bool? canEdit,
+    String? location,
+    String? lat,
+    String? lng,
+    num? radius,
+    String? address,
+    bool? open,
+    num? deliveryCost,
+    num? balance,
+    num? rate,
+    Currency? currency,
+    File? localImage,
+    File? localHeader,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      storeName: storeName ?? this.storeName,
+      description: description ?? this.description,
+      slug: slug ?? this.slug,
+      image: image ?? this.image,
+      localHeader: localHeader ?? this.localHeader,
+      header: header ?? this.header,
+      verified: verified ?? this.verified,
+      canEdit: canEdit ?? this.canEdit,
+      location: location ?? this.location,
+      lat: lat ?? this.lat,
+      lng: lng ?? this.lng,
+      radius: radius ?? this.radius,
+      localImage: localImage ?? this.localImage,
+      address: address ?? this.address,
+      open: open ?? this.open,
+      deliveryCost: deliveryCost ?? this.deliveryCost,
+      balance: balance ?? this.balance,
+      rate: rate ?? this.rate,
+      currency: currency ?? this.currency,
+    );
+  }
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -109,7 +177,9 @@ class User {
     header = json['header'];
     verified = json['verified'];
     canEdit = json['can_edit'];
+    localImage = json['localImage'];
     location = json['location'];
+    localHeader = json['localHeader'];
     lat = json['lat'];
     lng = json['lng'];
     radius = json['radius'];
@@ -132,11 +202,13 @@ class User {
     data['description'] = description;
     data['slug'] = slug;
     data['image'] = image;
+    data['localImage'] = localImage;
     data['header'] = header;
     data['verified'] = verified;
     data['can_edit'] = canEdit;
     data['location'] = location;
     data['lat'] = lat;
+    data['localHeader'] = localHeader;
     data['lng'] = lng;
     data['radius'] = radius;
     data['address'] = address;

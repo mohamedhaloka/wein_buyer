@@ -1,10 +1,13 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wein_buyer/core/notifications/notification_service.dart';
+import 'package:wein_buyer/core/utils/dynamic_link_provider.dart';
 import 'package:wein_buyer/view/provider/bottom_nav_provider/presentation/screens/bottom_nav_provider_screen.dart';
 import 'package:wein_buyer/view/select_lang/screens/select_lang_screen.dart';
 import 'package:wein_buyer/view/user/bottom_nav_user/presentation/screens/bottom_nav_user_screen.dart';
+
 import '../../../../../../../core/appStorage/app_storage.dart';
 import '../../../../../../../core/router/router.dart';
 import '../../../../core/blocks/lang_cubit/lang_cubit.dart';
@@ -20,22 +23,27 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   _splashTimer() async {
     setupNotifications();
-    Timer(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () async {
       String lang = AppStorage.getLangInfo;
       context.read<LangCubit>().onUpdateLanguage(lang);
-      if (AppStorage.getUserInfo == null && AppStorage.getUserProviderInfo == null) {
+      if (AppStorage.getUserInfo == null &&
+          AppStorage.getUserProviderInfo == null) {
         MagicRouter.navigateAndPopAll(const SelectLangScreen());
       } else {
-        if(AppStorage.getUserType == 0){
+        if (AppStorage.getUserType == 0) {
           MagicRouter.navigateAndPopAll(BottomNavProviderScreen(
             selectedIndex: 0,
           ));
-        }else{
+        } else {
           MagicRouter.navigateAndPopAll(BottomNavUserScreen(
             selectedIndex: 0,
           ));
         }
       }
+      if (DynamicLinkProvider.checked) return;
+
+      await DynamicLinkProvider().initDynamicLink();
+      DynamicLinkProvider.checked = true;
     });
   }
 

@@ -12,6 +12,7 @@ class CustomButtonWithIcon extends StatelessWidget {
     required this.onPress,
     this.radius = 10,
     this.paddingVertical = 10,
+    this.paddingHorizontal,
     this.buttonColor = AppColors.primaryColor,
     required this.icon,
     this.colorIcon = Colors.white,
@@ -24,6 +25,7 @@ class CustomButtonWithIcon extends StatelessWidget {
   final VoidCallback onPress;
   final double radius;
   final double paddingVertical;
+  final double? paddingHorizontal;
   final Color buttonColor;
   final IconData icon;
   final Color colorIcon;
@@ -35,7 +37,8 @@ class CustomButtonWithIcon extends StatelessWidget {
       onTap: onPress,
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: AppSizes.getProportionateScreenWidth(20),
+          horizontal:
+              paddingHorizontal ?? AppSizes.getProportionateScreenWidth(20),
           vertical: paddingVertical,
         ),
         decoration: BoxDecoration(

@@ -2,9 +2,9 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/router/router.dart';
-import 'package:wein_buyer/core/utils/app_strings.dart';
 import 'package:wein_buyer/view/user/products/presentation/screen/products_screen.dart';
 import 'package:wein_buyer/view/user/section/presentation/screen/section_screen.dart';
+
 import '../core/models/category.dart';
 import '../core/utils/app_colors.dart';
 import '../core/utils/app_sizes.dart';
@@ -41,13 +41,13 @@ class SectionItem extends StatelessWidget {
             children: [
               DottedBorder(
                 borderType: BorderType.RRect,
-                strokeWidth: 2,
+                strokeWidth: 1,
                 color: AppColors.primaryColor,
                 dashPattern: const [7, 7],
                 radius: const Radius.circular(50),
                 child: Container(
                   padding:
-                      EdgeInsets.all(AppSizes.getProportionateScreenWidth(7)),
+                      EdgeInsets.all(AppSizes.getProportionateScreenWidth(3)),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                   ),

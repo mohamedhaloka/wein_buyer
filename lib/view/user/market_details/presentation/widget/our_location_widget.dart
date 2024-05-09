@@ -41,18 +41,22 @@ class OurLocationWidget extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Icon(
                     Icons.location_on,
                     color: Colors.grey,
                   ),
-                  Text(
-                    AppStrings.howEverLocation.translate(),
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16.sp,
+                  Flexible(
+                    child: Text(
+                      AppStrings.howEverLocation.translate(),
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16.sp,
+                      ),
                     ),
                   ),
+                  const SizedBox(width: 2),
                   Text(
                     '${ProductDetailsCubit.of(context).marketDetails!.distance} ${AppStrings.howMuch.translate()}',
                     style: TextStyle(
@@ -108,7 +112,7 @@ class OurLocationWidget extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.4),
                           ),
                           child: Text(
-                             AppStrings.showOurLocationWidget.translate(),
+                            AppStrings.showOurLocationWidget.translate(),
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,

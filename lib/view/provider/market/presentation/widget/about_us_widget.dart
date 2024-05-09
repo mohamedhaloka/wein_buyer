@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
+
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/app_sizes.dart';
 import '../../../../../../widgets/space_width.dart';
@@ -22,13 +23,16 @@ class AboutUsWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            const TabWidget(),
+            const TabWidget(
+              height: 35,
+              width: 4,
+            ),
             SpaceW(inputWidth: 20),
             Text(
               AppStrings.aboutUsWidget.translate(),
               style: TextStyle(
                 color: AppColors.fontColor,
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -36,6 +40,7 @@ class AboutUsWidget extends StatelessWidget {
               icon: const Icon(
                 Icons.edit_outlined,
                 color: AppColors.primaryColor,
+                size: 18,
               ),
               onPressed: () {
                 showModalBottomSheet(

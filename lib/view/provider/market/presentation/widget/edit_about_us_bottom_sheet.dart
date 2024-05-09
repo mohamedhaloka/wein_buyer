@@ -62,7 +62,9 @@ class EditAboutUsBottomSheet extends StatelessWidget {
                             text: AppStrings.editAboutUsBottomSheet.translate(),
                             radius: 10,
                             onPress: () {
-                              MarketCubit.of(context).editAboutUs(context);
+                              MarketCubit.of(context).editAboutUs(
+                                context,
+                              );
                             },
                           );
                   },

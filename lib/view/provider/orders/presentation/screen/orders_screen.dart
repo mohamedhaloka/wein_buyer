@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
 import 'package:wein_buyer/view/notification/presentation/screen/notification_screen.dart';
 import 'package:wein_buyer/view/provider/orders/presentation/controller/orders_cubit.dart';
-import 'package:wein_buyer/view/provider/utils/presentation/controller/utils_cubit.dart';
+
 import '../../../../../../core/router/router.dart';
 import '../../../../../../core/services/services_locator.dart';
 import '../../../../../../core/utils/app_colors.dart';
@@ -102,9 +102,9 @@ class _OrdersScreenState extends State<OrdersScreen>
             labelColor: AppColors.primaryColor,
             indicatorColor: AppColors.primaryColor,
             indicatorWeight: 5,
+            isScrollable: true,
             unselectedLabelColor: Colors.grey,
-            onTap: (v) {
-            },
+            onTap: (v) {},
             labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ),

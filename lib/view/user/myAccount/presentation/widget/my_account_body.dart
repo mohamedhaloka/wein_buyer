@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,9 +14,10 @@ import 'package:wein_buyer/core/utils/app_strings.dart';
 import 'package:wein_buyer/view/user/addresses/presentation/screen/addresses_screen.dart';
 import 'package:wein_buyer/view/user/editProfileUser/presentation/screen/edit_profile_screen.dart';
 import 'package:wein_buyer/view/user/favorites/presentation/screen/favorites_screen.dart';
-import 'package:wein_buyer/view/user/pages/view/fqs/presentation/screen/fqs_screen.dart';
 import 'package:wein_buyer/view/user/myAccount/presentation/widget/bottom_sheet_change_language_widget.dart';
+import 'package:wein_buyer/view/user/pages/view/fqs/presentation/screen/fqs_screen.dart';
 import 'package:wein_buyer/widgets/space_width.dart';
+
 import '../../../../../../../widgets/my_painter.dart';
 import '../../../../../../../widgets/space_height.dart';
 import '../../../../provider/account/presentation/screen/contact_us_screen.dart';
@@ -137,6 +137,9 @@ class MyAccountBody extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             itemCount: listOfAccountItemModel.length,
+            padding: EdgeInsets.symmetric(
+              horizontal: AppSizes.getProportionateScreenWidth(25),
+            ),
             separatorBuilder: (context, index) {
               return const Divider();
             },
@@ -231,9 +234,11 @@ class MyAccountBody extends StatelessWidget {
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: AppSizes.getProportionateScreenHeight(5),
-                    horizontal: AppSizes.getProportionateScreenWidth(25),
-                  ),
+                        vertical: AppSizes.getProportionateScreenHeight(6),
+                      ) +
+                      (index == listOfAccountItemModel.length - 1
+                          ? const EdgeInsets.only(top: 25)
+                          : EdgeInsets.zero),
                   child: Row(
                     children: [
                       Icon(
@@ -241,12 +246,13 @@ class MyAccountBody extends StatelessWidget {
                         color: index == listOfAccountItemModel.length - 1
                             ? AppColors.primaryColor
                             : const Color.fromRGBO(214, 201, 201, 1),
+                        size: 18.sp,
                       ),
                       SpaceW(inputWidth: 10),
                       Text(
                         listOfAccountItemModel[index].text,
                         style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.bold,
                           color: index == listOfAccountItemModel.length - 1
                               ? AppColors.primaryColor

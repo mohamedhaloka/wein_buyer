@@ -88,6 +88,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
             labelColor: AppColors.primaryColor,
             indicatorColor: AppColors.primaryColor,
             indicatorWeight: 5,
+            isScrollable: true,
             unselectedLabelColor: Colors.grey,
             onTap: (v) {
               print(v);

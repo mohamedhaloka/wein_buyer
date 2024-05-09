@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +13,7 @@ import 'package:wein_buyer/view/user/addresses/presentation/screen/addresses_scr
 import 'package:wein_buyer/view/user/products/presentation/controller/products_cubit.dart';
 import 'package:wein_buyer/widgets/space_height.dart';
 import 'package:wein_buyer/widgets/space_width.dart';
+
 import '../../../../../../../widgets/snackBar.dart';
 import '../../../../../core/utils/app_strings.dart';
 import 'bottom_sheet_list_of_address_widget.dart';
@@ -67,7 +67,7 @@ class HomeAppBarWidget extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        right: AppSizes.getProportionateScreenWidth(25),
+                        right: AppSizes.getProportionateScreenWidth(22),
                       ),
                       child: Text(
                         tr(context, AppStrings.deliveryTo),
@@ -81,6 +81,7 @@ class HomeAppBarWidget extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.location_on,
+                          size: 18,
                           color: AppColors.transparntColor255,
                         ),
                         BlocBuilder<AddressesCubit, AddressesState>(
@@ -110,7 +111,7 @@ class HomeAppBarWidget extends StatelessWidget {
                           },
                         ),
                         const Icon(
-                          Icons.arrow_drop_down,
+                          Icons.keyboard_arrow_down_sharp,
                           color: AppColors.transparntColor255,
                         ),
                       ],
@@ -129,7 +130,6 @@ class HomeAppBarWidget extends StatelessWidget {
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: AppSizes.getProportionateScreenWidth(20),
                     vertical: AppSizes.getProportionateScreenHeight(5),
                   ),
                   child: Container(
