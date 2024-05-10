@@ -168,7 +168,7 @@ class HeaderMarketWidget extends StatelessWidget {
                                       : BoxDecoration(
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
-                                              fit: BoxFit.fill,
+                                              fit: BoxFit.cover,
                                               image: NetworkImage(
                                                   MarketCubit.of(context)
                                                           .profileModel!

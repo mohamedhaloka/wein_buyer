@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +7,7 @@ import 'package:wein_buyer/core/utils/app_sizes.dart';
 import 'package:wein_buyer/widgets/loading_indicator.dart';
 import 'package:wein_buyer/widgets/space_width.dart';
 import 'package:wein_buyer/widgets/tab_widget.dart';
-import '../../../../../../../core/models/product.dart';
+
 import '../../../../../../../widgets/product_item.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../productDetails/presentation/controller/product_details_cubit.dart';
@@ -32,68 +31,75 @@ class _SectionsAndProductsWidgetState extends State<SectionsAndProductsWidget> {
     return Expanded(
       child: Column(
         children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                const TabWidget(),
-                SpaceW(inputWidth: 10),
-                Row(
-                  children: List.generate(
-                    ProductDetailsCubit.of(context).listOfCates.length,
-                    (index) => Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppSizes.getProportionateScreenWidth(5),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            selectedItem = index;
-                            ProductDetailsCubit.of(context).getMarketProducts(
-                                widget.marketId,
-                                ProductDetailsCubit.of(context)
-                                    .listOfCates[index]
-                                    .id!);
-                          });
-                        },
-                        child: Container(
+          if (ProductDetailsCubit.of(context).listOfCates.isNotEmpty)
+            SizedBox(
+              height: 40,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TabWidget(),
+                  SpaceW(inputWidth: 10),
+                  Expanded(
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(
+                        ProductDetailsCubit.of(context).listOfCates.length,
+                        (index) => Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal:
-                                AppSizes.getProportionateScreenWidth(15),
-                            vertical: AppSizes.getProportionateScreenHeight(10),
+                            horizontal: AppSizes.getProportionateScreenWidth(5),
                           ),
-                          decoration: selectedItem == index
-                              ? BoxDecoration(
-                                  color:
-                                      AppColors.primaryColor.withOpacity(0.07),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: AppColors.primaryColor,
-                                    width: 1,
-                                  ),
-                                )
-                              : null,
-                          child: Text(
-                            ProductDetailsCubit.of(context)
-                                    .listOfCates[index]
-                                    .name ??
-                                '',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.bold,
-                              color: selectedItem == index
-                                  ? AppColors.primaryColor
-                                  : Colors.grey,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedItem = index;
+                                ProductDetailsCubit.of(context)
+                                    .getMarketProducts(
+                                        widget.marketId,
+                                        ProductDetailsCubit.of(context)
+                                            .listOfCates[index]
+                                            .id!);
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    AppSizes.getProportionateScreenWidth(15),
+                                vertical:
+                                    AppSizes.getProportionateScreenHeight(10),
+                              ),
+                              decoration: selectedItem == index
+                                  ? BoxDecoration(
+                                      color: AppColors.primaryColor
+                                          .withOpacity(0.07),
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: AppColors.primaryColor,
+                                        width: 1,
+                                      ),
+                                    )
+                                  : null,
+                              child: Text(
+                                ProductDetailsCubit.of(context)
+                                        .listOfCates[index]
+                                        .name ??
+                                    '',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: selectedItem == index
+                                      ? AppColors.primaryColor
+                                      : Colors.grey,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
           Expanded(
             child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
               buildWhen: (previous, current) =>

@@ -1,20 +1,18 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:video_player/video_player.dart';
-import 'package:wein_buyer/core/extentions/translate_ext.dart';
-import 'package:wein_buyer/view/user/productDetails/presentation/screen/video_view.dart';
-import 'package:wein_buyer/widgets/space_height.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wein_buyer/core/extentions/translate_ext.dart';
+import 'package:wein_buyer/widgets/space_height.dart';
+import 'package:wein_buyer/widgets/video_thumbnail_widget.dart';
+
 import '../../../../../../../core/models/product_details.dart';
 import '../../../../../../../core/utils/app_colors.dart';
 import '../../../../../../../core/utils/app_sizes.dart';
 import '../../../../../../../widgets/space_width.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../favorites/presentation/controller/favorites_cubit.dart';
-import '../screen/image_view.dart';
 import 'image_item.dart';
 
 class ImgNamePriceProductDetailsWidget extends StatefulWidget {
@@ -61,9 +59,11 @@ class _ImgNamePriceProductDetailsWidgetState
                           });
                         },
                       ),
-                      items: widget.product.product!.files!
-                          .map((item) => ImageItem(item: item))
-                          .toList(),
+                      items: widget.product.product!.files!.map((item) {
+                        return item.type == 'video'
+                            ? VideoThumbnailWidget(item.file)
+                            : ImageItem(item: item);
+                      }).toList(),
                     ),
                   ),
                   Positioned(
@@ -72,7 +72,7 @@ class _ImgNamePriceProductDetailsWidgetState
                     left: 0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: widget.product.product!.files!
+                      children: (widget.product.product?.files ?? [])
                           .asMap()
                           .entries
                           .map((entry) {

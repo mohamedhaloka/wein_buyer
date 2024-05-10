@@ -7,6 +7,7 @@ import 'package:wein_buyer/core/utils/app_enums.dart';
 import 'package:wein_buyer/core/utils/app_sizes.dart';
 import 'package:wein_buyer/widgets/space_height.dart';
 import 'package:wein_buyer/widgets/space_width.dart';
+
 import '../../../../../core/utils/app_strings.dart';
 import '../../../productDetails/presentation/controller/product_details_cubit.dart';
 
@@ -38,6 +39,7 @@ class TabSectionsWidget extends StatelessWidget {
                       children: [
                         Text(
                           AppStrings.dataFromStore.translate(),
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
@@ -70,6 +72,7 @@ class TabSectionsWidget extends StatelessWidget {
                       children: [
                         Text(
                           AppStrings.proudestTabSectionsWidget.translate(),
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,

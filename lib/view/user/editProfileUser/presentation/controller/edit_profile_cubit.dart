@@ -1,19 +1,17 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
 import 'package:wein_buyer/core/router/router.dart';
 import 'package:wein_buyer/core/utils/app_func.dart';
 import 'package:wein_buyer/core/utils/app_strings.dart';
-import 'package:wein_buyer/view/select_user/presentation/screens/select_user_screen.dart';
 import 'package:wein_buyer/view/user/bottom_nav_user/presentation/screens/bottom_nav_user_screen.dart';
 import 'package:wein_buyer/view/user/editProfileUser/data/model/edit_profile_data_model.dart';
 import 'package:wein_buyer/view/user/editProfileUser/domain/usecases/get_profile_data_user.dart';
 import 'package:wein_buyer/view/user/editProfileUser/domain/usecases/update_password.dart';
 import 'package:wein_buyer/view/user/editProfileUser/domain/usecases/update_profile_data.dart';
+
 import '../../../../../../../core/utils/app_enums.dart';
 import '../../../../../../../widgets/snackBar.dart';
 import '../../../../../core/appStorage/app_storage.dart';
@@ -55,6 +53,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
   selectedImageProfile() async {
     File? image = await AppFunc.getImage();
+    if (image == null) return;
     imageProfileFile = image;
     emit(SelectedImageProfile());
   }

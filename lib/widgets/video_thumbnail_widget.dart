@@ -2,9 +2,13 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:wein_buyer/core/router/router.dart';
+import 'package:wein_buyer/core/utils/app_colors.dart';
+import 'package:wein_buyer/view/user/productDetails/presentation/screen/video_view.dart';
 
 class VideoThumbnailWidget extends StatefulWidget {
   const VideoThumbnailWidget(this.fileUrl, {super.key});
@@ -31,7 +35,17 @@ class _VideoThumbnailWidgetState extends State<VideoThumbnailWidget> {
   }
 
   void getVideoThumbnail(String url) async {
-    final dirPath = (await getTemporaryDirectory()).path;
+    final dirPath = (await getApplicationCacheDirectory()).path;
+    final fileUrlName = basename(widget.fileUrl!);
+
+    if (File(dirPath + fileUrlName).existsSync()) {
+      videoThumbnail = File(dirPath + fileUrlName);
+      isLoading = false;
+
+      setState(() {});
+
+      return;
+    }
 
     final fileName = await VideoThumbnail.thumbnailFile(
       video: url,
@@ -62,7 +76,31 @@ class _VideoThumbnailWidgetState extends State<VideoThumbnailWidget> {
     }
 
     if (videoThumbnail != null) {
-      return Image.file(videoThumbnail!);
+      return InkWell(
+        onTap: () => MagicRouter.navigateTo(
+          VideoView(videoUrl: widget.fileUrl ?? '',),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.file(
+              videoThumbnail!,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            Positioned(
+              child: CircleAvatar(
+                radius: 15,
+                backgroundColor: Colors.black.withOpacity(.5),
+                child: const Icon(
+                  Icons.play_arrow,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+            )
+          ],
+        ),
+      );
     }
     return const Icon(
       Icons.video_call,

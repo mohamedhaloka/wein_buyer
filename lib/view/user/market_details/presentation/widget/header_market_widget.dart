@@ -84,9 +84,11 @@ class HeaderMarketWidget extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                        image: NetworkImage(productDetailsCubit
-                                                .marketDetails!.image ??
-                                            ''))),
+                                      image: NetworkImage(productDetailsCubit
+                                              .marketDetails!.image ??
+                                          ''),
+                                      fit: BoxFit.cover,
+                                    )),
                               ),
                             ],
                           ),
