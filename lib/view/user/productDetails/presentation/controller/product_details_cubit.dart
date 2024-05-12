@@ -1,8 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
+
 import '../../../../../../../core/models/categories_item_model.dart';
 import '../../../../../../../core/models/market_details_model.dart';
 import '../../../../../../../core/models/product.dart';
@@ -44,6 +44,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   MarketDetails? marketDetails;
   List<CategoriesItem> listOfCates = [];
   List<Product> listOfProductsOfCategories = [];
+  int selectedCategory = 0;
 
   int selectedItemColor = 0;
   int selectedItemSize = 0;
@@ -59,8 +60,9 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     emit(ChangeTabButtonsState());
   }
 
-  Future getMarketProducts(int marketId, int categoryId) async {
+  Future getMarketProducts(int index, int marketId, int categoryId) async {
     listOfProductsOfCategories.clear();
+    selectedCategory = index;
     emit(GetMarketProductsLoading());
     final res = await getMarketProductsUseCase.execute(marketId, categoryId);
     res.fold(

@@ -163,9 +163,9 @@ class MarketCubit extends Cubit<MarketState> {
 
   void onTapOnCategoryItem(int index) {
     getProducts(listOfCate[index].id);
-    listOfCate.forEach((element) {
+    for (var element in listOfCate) {
       element.isSelected = false;
-    });
+    }
     listOfCate[index].isSelected = true;
   }
 

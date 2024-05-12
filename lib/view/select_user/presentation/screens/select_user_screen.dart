@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wein_buyer/core/appStorage/app_storage.dart';
-import 'package:wein_buyer/core/blocks/lang_cubit/lang_cubit.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
 import 'package:wein_buyer/core/router/router.dart';
 import 'package:wein_buyer/core/utils/app_assets.dart';
@@ -12,6 +10,7 @@ import 'package:wein_buyer/view/provider/login_provider/presentation/screen/logi
 import 'package:wein_buyer/view/user/login_user/presentation/screen/login_user_screen.dart';
 import 'package:wein_buyer/widgets/custom_button.dart';
 import 'package:wein_buyer/widgets/space_height.dart';
+
 import '../../../../core/utils/app_strings.dart';
 import '../controller/select_user_cubit.dart';
 
@@ -28,6 +27,7 @@ class SelectUserScreen extends StatelessWidget {
           title: Text(AppStrings.selectUserTitle.translate()),
           centerTitle: true,
           backgroundColor: AppColors.primaryColor,
+          titleTextStyle: const TextStyle(color: Colors.white),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(

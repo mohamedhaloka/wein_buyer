@@ -24,8 +24,6 @@ class SectionsAndProductsWidget extends StatefulWidget {
 }
 
 class _SectionsAndProductsWidgetState extends State<SectionsAndProductsWidget> {
-  int selectedItem = 0;
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -51,9 +49,9 @@ class _SectionsAndProductsWidgetState extends State<SectionsAndProductsWidget> {
                           child: InkWell(
                             onTap: () {
                               setState(() {
-                                selectedItem = index;
                                 ProductDetailsCubit.of(context)
                                     .getMarketProducts(
+                                        index,
                                         widget.marketId,
                                         ProductDetailsCubit.of(context)
                                             .listOfCates[index]
@@ -67,7 +65,9 @@ class _SectionsAndProductsWidgetState extends State<SectionsAndProductsWidget> {
                                 vertical:
                                     AppSizes.getProportionateScreenHeight(10),
                               ),
-                              decoration: selectedItem == index
+                              decoration: ProductDetailsCubit.of(context)
+                                          .selectedCategory ==
+                                      index
                                   ? BoxDecoration(
                                       color: AppColors.primaryColor
                                           .withOpacity(0.07),
@@ -86,7 +86,9 @@ class _SectionsAndProductsWidgetState extends State<SectionsAndProductsWidget> {
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: selectedItem == index
+                                  color: ProductDetailsCubit.of(context)
+                                              .selectedCategory ==
+                                          index
                                       ? AppColors.primaryColor
                                       : Colors.grey,
                                 ),
