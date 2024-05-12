@@ -27,7 +27,10 @@ class SelectUserScreen extends StatelessWidget {
           title: Text(AppStrings.selectUserTitle.translate()),
           centerTitle: true,
           backgroundColor: AppColors.primaryColor,
-          titleTextStyle: const TextStyle(color: Colors.white),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 16.sp,
+          ),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(
