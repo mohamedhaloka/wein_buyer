@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:wein_buyer/view/user/myAccount/data/model/account_item_model.dart';
-
 class AppStrings {
-
-  static const String baseurl = 'https://ezygo.org/api/client/';
-  static const String baseurlImg = 'https://ezygo.org/uploads';
+  static const String baseurl = 'http://ezygo.org/api/client/';
+  static const String baseurlImg = 'http://ezygo.org/uploads';
   static const String facebookURL = 'https://www.facebook.com/ezygoeg/';
   static const String tiktokURL = 'https://www.tiktok.com/@ezygoeg';
 
@@ -93,7 +89,8 @@ class AppStrings {
   static const String endpointReturnPolicy = 'pages/return_policy';
   static const String endpointUpdateReturnPolicy = 'pages/return_policy/update';
   static const String endpointDeliveryCost = 'pages/delivery_cost_new';
-  static const String endpointUpdateDeliveryCost = 'pages/delivery_cost_new/update';
+  static const String endpointUpdateDeliveryCost =
+      'pages/delivery_cost_new/update';
   static const String endpointGetVerifiedStatus = 'get-verified-status';
 
   // Orders
@@ -168,7 +165,8 @@ class AppStrings {
   static const String enquiryValidator = 'enquiryValidator';
   static const String nameValidator = 'nameValidator';
   static const String confirmPasswordValidator = 'confirmPasswordValidator';
-  static const String confirmPasswordMismatchValidator = 'confirmPasswordMismatchValidator';
+  static const String confirmPasswordMismatchValidator =
+      'confirmPasswordMismatchValidator';
   static const String passwordValidator = 'passwordValidator';
   static const String pinCodeValidator = 'pinCodeValidator';
   static const String deleteImageMsg = 'deleteImageMsg';
