@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
+import 'package:wein_buyer/view/user/productDetails/presentation/screen/images_view.dart';
 import 'package:wein_buyer/widgets/space_height.dart';
 import 'package:wein_buyer/widgets/video_thumbnail_widget.dart';
 
@@ -45,25 +46,41 @@ class _ImgNamePriceProductDetailsWidgetState
             children: [
               Stack(
                 children: [
-                  SizedBox(
-                    height: AppSizes.screenHeight * 0.2,
-                    width: AppSizes.screenWidth,
-                    child: CarouselSlider(
-                      options: CarouselOptions(
-                        viewportFraction: 1,
-                        disableCenter: true,
-                        autoPlay: true,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            _current = index;
-                          });
-                        },
+                  GestureDetector(
+                    onTap: () {
+                      final images = (widget.product.product?.files ?? [])
+                          .where((element) => element.type != 'video')
+                          .toList();
+                      final imageUrls =
+                          images.map((e) => e.file ?? '').toList();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ImagesView(
+                                images: imageUrls,
+                              )));
+                    },
+                    child: SizedBox(
+                      height: AppSizes.screenHeight * 0.2,
+                      width: AppSizes.screenWidth,
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                          viewportFraction: 1,
+                          disableCenter: true,
+                          autoPlay: true,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _current = index;
+                            });
+                          },
+                        ),
+                        items: widget.product.product!.files!.map((item) {
+                          return item.type == 'video'
+                              ? VideoThumbnailWidget(item.file)
+                              : ImageItem(
+                                  item: item,
+                                  enableGesture: false,
+                                );
+                        }).toList(),
                       ),
-                      items: widget.product.product!.files!.map((item) {
-                        return item.type == 'video'
-                            ? VideoThumbnailWidget(item.file)
-                            : ImageItem(item: item);
-                      }).toList(),
                     ),
                   ),
                   Positioned(

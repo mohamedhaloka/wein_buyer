@@ -1,110 +1,137 @@
-import 'dart:developer';
 import 'dart:io';
 
+import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:wein_buyer/core/router/router.dart';
-import 'package:wein_buyer/core/utils/app_colors.dart';
-import 'package:wein_buyer/view/user/productDetails/presentation/screen/video_view.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoThumbnailWidget extends StatefulWidget {
-  const VideoThumbnailWidget(this.fileUrl, {super.key});
-  final String? fileUrl;
+  const VideoThumbnailWidget(this.url, {super.key});
+  final String? url;
 
   @override
   State<VideoThumbnailWidget> createState() => _VideoThumbnailWidgetState();
 }
 
 class _VideoThumbnailWidgetState extends State<VideoThumbnailWidget> {
-  File? videoThumbnail;
-  bool isLoading = true;
+  VideoPlayerController? _controller;
+
+  File? selectedVideoFile;
+  String? selectedVideoUrl;
+
+  BaseStatus _fetchVideoDetails = BaseStatus.initial;
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if ((widget.fileUrl ?? '').isEmpty) {
-        isLoading = false;
-        setState(() {});
-        return;
-      }
-      getVideoThumbnail(widget.fileUrl!);
-    });
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.url != null) {
+        selectedVideoUrl = widget.url;
+        setState(() {});
+      }
+
+      if (widget.url == null) return;
+
+      _getVideoDetails();
+    });
   }
 
-  void getVideoThumbnail(String url) async {
-    final dirPath = (await getApplicationCacheDirectory()).path;
-    final fileUrlName = basename(widget.fileUrl!);
+  String get _url => widget.url ?? '';
 
-    if (File(dirPath + fileUrlName).existsSync()) {
-      videoThumbnail = File(dirPath + fileUrlName);
-      isLoading = false;
-
-      setState(() {});
-
-      return;
-    }
-
-    final fileName = await VideoThumbnail.thumbnailFile(
-      video: url,
-      thumbnailPath: dirPath,
-      imageFormat: ImageFormat.WEBP,
-      quality: 50,
-    );
-
-    log('File name $fileName');
-    if (fileName == null) return;
-    videoThumbnail = File(fileName);
-    isLoading = false;
-
+  void _getVideoDetails() async {
+    _fetchVideoDetails = BaseStatus.inProgress;
     setState(() {});
+
+    _controller = (selectedVideoUrl != null
+        ? VideoPlayerController.networkUrl(
+            Uri.parse(_url),
+          )
+        : VideoPlayerController.file(
+            selectedVideoFile!,
+          ))
+      ..initialize().then((_) {
+        _fetchVideoDetails = BaseStatus.success;
+        setState(() {});
+      }).catchError((e) {
+        dev.log('video error $e');
+        _fetchVideoDetails = BaseStatus.failure;
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return Shimmer.fromColors(
-        baseColor: Colors.grey.withOpacity(.5),
-        highlightColor: Colors.grey.withOpacity(.2),
-        child: const Icon(
-          Icons.video_call,
-          size: 35,
-        ),
-      );
-    }
-
-    if (videoThumbnail != null) {
-      return InkWell(
-        onTap: () => MagicRouter.navigateTo(
-          VideoView(videoUrl: widget.fileUrl ?? '',),
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Image.file(
-              videoThumbnail!,
-              width: double.infinity,
-              height: double.infinity,
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              child: Container(
+                child: _controller == null
+                    ? null
+                    : Center(
+                        child: AspectRatio(
+                          aspectRatio: _controller?.value.aspectRatio ?? 1,
+                          child: VideoPlayer(_controller!),
+                        ),
+                      ),
+              ),
             ),
-            Positioned(
-              child: CircleAvatar(
-                radius: 15,
-                backgroundColor: Colors.black.withOpacity(.5),
-                child: const Icon(
-                  Icons.play_arrow,
-                  color: AppColors.primaryColor,
+          ),
+          if (_fetchVideoDetails.isInProgress)
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: 30,
+                  height: 30,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: const CircularProgressIndicator(),
                 ),
               ),
-            )
-          ],
-        ),
-      );
-    }
-    return const Icon(
-      Icons.video_call,
-      size: 35,
+            ),
+          if (_fetchVideoDetails.isFailure)
+            const Positioned(
+              left: 20,
+              right: 20,
+              child: Center(
+                child: Icon(Icons.info),
+              ),
+            ),
+        ],
+      ),
     );
   }
+}
+
+enum BaseStatus {
+  initial,
+  inProgress,
+  success,
+  failure;
+
+  const BaseStatus();
+}
+
+extension BaseStatusFunctionality on BaseStatus {
+  bool get isInitial => this == BaseStatus.initial;
+  bool get isSuccess => this == BaseStatus.success;
+  bool get isInProgress => this == BaseStatus.inProgress;
+  bool get isFailure => this == BaseStatus.failure;
 }

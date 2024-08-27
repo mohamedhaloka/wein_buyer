@@ -11,8 +11,13 @@ import '../screen/image_view.dart';
 import '../screen/video_view.dart';
 
 class ImageItem extends StatefulWidget {
-  const ImageItem({Key? key, required this.item}) : super(key: key);
+  const ImageItem({
+    Key? key,
+    required this.item,
+    this.enableGesture = true,
+  }) : super(key: key);
   final Files item;
+  final bool enableGesture;
 
   @override
   State<ImageItem> createState() => _ImageItemState();
@@ -23,8 +28,11 @@ class _ImageItemState extends State<ImageItem> {
   Widget build(BuildContext context) {
     if (widget.item.type == 'video') {
       return GestureDetector(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => VideoView(videoUrl: widget.item.file ?? ''))),
+        onTap: widget.enableGesture
+            ? () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    VideoView(videoUrl: widget.item.file ?? '')))
+            : null,
         child: SizedBox(
           width: AppSizes.screenWidth,
           child: const Icon(
@@ -35,10 +43,12 @@ class _ImageItemState extends State<ImageItem> {
       );
     } else {
       return GestureDetector(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ImageView(
-                  img: widget.item.file ?? '',
-                ))),
+        onTap: widget.enableGesture
+            ? () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ImageView(
+                      img: widget.item.file ?? '',
+                    )))
+            : null,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: CachedNetworkImage(
