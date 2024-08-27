@@ -28,7 +28,8 @@ class DynamicLinkProvider {
   Future<void> initDynamicLink() async {
     dynamicLinks.getInitialLink().then(
       (value) {
-        final Uri uri = value!.link;
+        final Uri? uri = value?.link;
+        if(uri == null) return;
         print("gkkkkkdjkkff: ${uri.queryParameters['pro']}");
         if (uri.queryParameters['pro'] == "true") {
           MagicRouter.navigateTo(ProductDetailsScreen(

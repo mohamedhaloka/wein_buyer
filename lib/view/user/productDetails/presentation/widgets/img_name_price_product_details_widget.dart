@@ -53,6 +53,7 @@ class _ImgNamePriceProductDetailsWidgetState
                           .toList();
                       final imageUrls =
                           images.map((e) => e.file ?? '').toList();
+
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => ImagesView(
                                 images: imageUrls,

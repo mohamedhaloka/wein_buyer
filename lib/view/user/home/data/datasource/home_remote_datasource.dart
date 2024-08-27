@@ -18,6 +18,7 @@ class HomeRemoteDatasource extends BaseHomeRemoteDatasource {
     final response = await DioHelper.get(
       "${AppStrings.baseurl}${AppStrings.endpointHome}"
     );
+    print(response.data);
     if (response.data['success'] == true) {
       if (kDebugMode) {
         print("Success getHomeData");
