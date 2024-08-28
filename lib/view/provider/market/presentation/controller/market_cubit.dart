@@ -16,6 +16,8 @@ import 'package:wein_buyer/view/provider/market/domain/usecases/getAllCategories
 import 'package:wein_buyer/view/provider/market/domain/usecases/getProducts.dart';
 import 'package:wein_buyer/view/provider/market/domain/usecases/getProfileDataProvider.dart';
 import 'package:wein_buyer/view/provider/market/domain/usecases/get_my_rates.dart';
+import 'package:wein_buyer/view/provider/market/presentation/widget/edit_header_market_bottom_sheet.dart';
+import 'package:wein_buyer/view/provider/market/presentation/widget/edit_image_market_bottom_sheet.dart';
 import 'package:wein_buyer/view/provider/market/presentation/widget/edit_location_market_bottom_sheet.dart';
 
 import '../../../../../../core/location/LocationAddressImports.dart';
@@ -288,7 +290,7 @@ class MarketCubit extends Cubit<MarketState> {
         emit(MarketInitial());
       },
       (res) async {
-        MagicRouter.pop();
+        // MagicRouter.pop();
         // showModalBottomSheet<void>(
         //   context: context,
         //   isDismissible: false,
@@ -318,7 +320,7 @@ class MarketCubit extends Cubit<MarketState> {
         emit(MarketInitial());
       },
       (res) async {
-        MagicRouter.pop();
+        // MagicRouter.pop();
         // showModalBottomSheet<void>(
         //   context: context,
         //   isDismissible: false,
@@ -401,6 +403,9 @@ class MarketCubit extends Cubit<MarketState> {
       );
       profileModel = profileModel?.copyWith(user: user);
 
+      if(!context.mounted) return;
+      editImageMarket(context);
+
       emit(SelectedImageState());
     }
   }
@@ -415,6 +420,9 @@ class MarketCubit extends Cubit<MarketState> {
       );
       profileModel = profileModel?.copyWith(user: user);
 
+      if(!context.mounted) return;
+
+      editHeaderMarket(context);
       // showModalBottomSheet(
       //   context: context,
       //   isScrollControlled: true,
