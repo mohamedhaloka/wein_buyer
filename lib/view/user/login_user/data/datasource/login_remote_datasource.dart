@@ -24,7 +24,6 @@ class LoginUserRemoteDatasource extends BaseLoginUserRemoteDatasource {
         "fcm_token": token,
       },
     );
-    print(response.data);
     if (response.data['success'] == true) {
       if (kDebugMode) {
         print("Success LoginRepo");
