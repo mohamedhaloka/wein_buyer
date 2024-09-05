@@ -1,5 +1,5 @@
 class AppStrings {
-  static const String baseurl = 'http://ezygo.org/api/client/';
+  static const String baseurl = 'https://ezygo.org/api/client/';
   static const String baseurlImg = 'http://ezygo.org/uploads';
   static const String facebookURL = 'https://www.facebook.com/ezygoeg/';
   static const String tiktokURL = 'https://www.tiktok.com/@ezygoeg';

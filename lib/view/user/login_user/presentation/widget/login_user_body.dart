@@ -135,9 +135,7 @@ class LoginUserBody extends StatelessWidget {
                   ),
                   BlocBuilder<LoginUserCubit, LoginUserState>(
                     builder: (context, state) {
-                      return state is LoginLoading
-                          ? const LoadingIndicator()
-                          : CustomButton(
+                      return  CustomButton(
                               text: AppStrings.login.translate(),
                               paddingVertical: 15,
                               onPress: () =>
