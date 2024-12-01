@@ -26,7 +26,7 @@ class EditProfileRemoteDatasource extends BaseEditProfileRemoteDatasource {
     );
     if (response.data['success'] == true) {
       if (kDebugMode) {
-        print("Success getProfileData");
+        print("Success getProfileData ${response.data}");
       }
       return ProfileModel.fromJson(response.data);
     } else {

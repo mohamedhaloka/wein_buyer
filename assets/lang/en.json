@@ -17,6 +17,8 @@
   "myMarket": "My Market",
   "myAccount": "My Account",
   "edit": "Edit",
+  "invalid": "Invalid",
+  "invalidDiscount": "Invalid Discount",
   "saveEdits": "Save Edits",
   "showAll": "Show All",
   "pleaseLogin": "Please Login",

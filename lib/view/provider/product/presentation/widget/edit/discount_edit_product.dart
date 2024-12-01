@@ -51,7 +51,7 @@ class DiscountEditProduct extends StatelessWidget {
                 controller: AddProductCubit.of(context).discountController,
                 validator: (v) {},
                 onChanged: (v) {
-                  AddProductCubit.of(context).calcuDiscount(v);
+                  AddProductCubit.of(context).calculateDiscount(v);
                 },
               ),
             ),

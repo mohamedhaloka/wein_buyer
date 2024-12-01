@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:wein_buyer/core/appStorage/app_storage.dart';
 import 'package:wein_buyer/core/models/privacy_policy_model.dart';
 import 'package:wein_buyer/view/user/pages/domain/usecases/get_faqs.dart';
 import 'package:wein_buyer/view/user/pages/domain/usecases/get_privacy_policy.dart';
@@ -78,6 +79,10 @@ class PagesCubit extends Cubit<PagesState> {
   }
 
   Future getCurrencies() async {
+    if ((AppStorage.currency ?? 0) > 0) {
+      selectedCurrenciesModel = Currency(id: AppStorage.currency);
+    }
+
     emit(GetCurrenciesLoading());
     final res = await getCurrenciesUseCase.execute();
     res.fold(

@@ -154,13 +154,43 @@ class AddProductCubit extends Cubit<AddProductState> {
     emit(AddAnotherProperty());
   }
 
-  calcuDiscount(String discount) {
+  calculateDiscount(String discount) {
     if (discount.isNotEmpty) {
       priceAfterDiscountController.text = (num.parse(priceController.text) -
               (num.parse(priceController.text) * (num.parse(discount) / 100)))
           .toString();
+
+      final originalPrice = num.parse(priceController.text);
+      final discountedPrice = num.parse(priceAfterDiscountController.text);
+
+      if (discountedPrice > originalPrice || discountedPrice < 0) {
+        priceAfterDiscountController.text = AppStrings.invalid.translate();
+        emit(CalcuDescount());
+        return;
+      }
+
     } else {
       priceAfterDiscountController.text = '';
+    }
+    emit(CalcuDescount());
+  }
+
+  calculateDiscountPercentage() {
+    if (priceController.text.isNotEmpty &&
+        priceAfterDiscountController.text.isNotEmpty) {
+      final originalPrice = num.parse(priceController.text);
+      final discountedPrice = num.parse(priceAfterDiscountController.text);
+      final discountPercentage =
+          ((originalPrice - discountedPrice) / originalPrice) * 100;
+      if (discountedPrice > originalPrice) {
+        discountController.text = AppStrings.invalid.translate();
+        emit(CalcuDescount());
+        return;
+      }
+
+      discountController.text = discountPercentage.toStringAsFixed(2);
+    } else {
+      discountController.text = '';
     }
     emit(CalcuDescount());
   }
@@ -234,7 +264,8 @@ class AddProductCubit extends Cubit<AddProductState> {
       setAnotherProperty(PropertyModel(
         size: element.size,
         colorController: TextEditingController(text: element.color),
-        quantityController: TextEditingController(text: element.quantity.toString()),
+        quantityController:
+            TextEditingController(text: element.quantity.toString()),
       ));
     }
   }

@@ -41,41 +41,38 @@ class DiscountAddProduct extends StatelessWidget {
             ),
           ],
         ),
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: InputFormField(
-                hint: AppStrings.discountValue.translate(),
-                textColor: AppColors.fontColor,
-                fillColor: Colors.white,
-                isNumber: true,
-                controller: AddProductCubit.of(context).discountController,
-                validator: (v) {},
-                onChanged: (v) {
-                  AddProductCubit.of(context).calcuDiscount(v);
-                },
+        BlocBuilder<AddProductCubit, AddProductState>(
+          buildWhen: (previous, current) => current is CalcuDescount,
+          builder: (context, state) => Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: InputFormField(
+                  hint: AppStrings.discountValue.translate(),
+                  textColor: AppColors.fontColor,
+                  fillColor: Colors.white,
+                  isNumber: true,
+                  controller: AddProductCubit.of(context).discountController,
+                  validator: (v) {},
+                  onChanged: (v) => AddProductCubit.of(context).calculateDiscount(v),
+                ),
               ),
-            ),
-            SpaceW(inputWidth: 10),
-            Expanded(
-              flex: 1,
-              child: BlocBuilder<AddProductCubit, AddProductState>(
-                buildWhen: (previous, current) => current is CalcuDescount,
-                builder: (context, state) {
-                  return InputFormField(
-                    hint: AppStrings.productAfterPrice.translate(),
-                    clickable: true,
-                    textColor: const Color.fromRGBO(161, 147, 147, 1),
-                    fillColor: const Color.fromRGBO(251, 251, 251, 1),
-                    controller: AddProductCubit.of(context)
-                        .priceAfterDiscountController,
-                    validator: (v) {},
-                  );
-                },
+              SpaceW(inputWidth: 10),
+              Expanded(
+                flex: 1,
+                child: InputFormField(
+                  hint: AppStrings.productAfterPrice.translate(),
+                  textColor: AppColors.fontColor,
+                  fillColor: Colors.white,
+                  isNumber: true,
+                  controller:
+                      AddProductCubit.of(context).priceAfterDiscountController,
+                  onChanged: (v) => AddProductCubit.of(context).calculateDiscountPercentage(),
+                  validator: (v) {},
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

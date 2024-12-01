@@ -24,81 +24,80 @@ class MarketWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(product.merchant!.rate);
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: AppSizes.getProportionateScreenWidth(25),
         vertical: AppSizes.getProportionateScreenHeight(10),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            AppStrings.store.translate(),
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.bold,
-              color: AppColors.fontColor,
-            ),
-          ),
-          SpaceH(inputHeigth: 10),
-          Row(
-            children: [
-              SizedBox(
-                width: AppSizes.getProportionateScreenWidth(100),
-                height: AppSizes.getProportionateScreenWidth(100),
-                child: CachedNetworkImage(
-                  imageUrl: product.merchant!.image ?? '',
-                ),
+      child: InkWell(
+        onTap: (){
+          if (AppStorage.isLogged) {
+            MagicRouter.navigateTo(MarketDetailsScreen(
+              marketId: product.merchant!.id!,
+            ));
+          } else {
+            showSnackBar(
+              AppStrings.pleaseLogin.translate(),
+              pleaseLogin: true,
+            );
+          }
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              AppStrings.store.translate(),
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+                color: AppColors.fontColor,
               ),
-              SpaceW(inputWidth: 15),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.merchant!.name ?? '',
-                    style: TextStyle(
-                        color: AppColors.fontColor,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold),
+            ),
+            SpaceH(inputHeigth: 10),
+            Row(
+              children: [
+                SizedBox(
+                  width: AppSizes.getProportionateScreenWidth(100),
+                  height: AppSizes.getProportionateScreenWidth(100),
+                  child: CachedNetworkImage(
+                    imageUrl: product.merchant!.image ?? '',
                   ),
-                  SpaceH(inputHeigth: 10),
-                  Row(
-                    children: [
-                      RatingBarIndicator(
-                        rating: product.merchant!.rate!.toDouble(),
-                        itemBuilder: (context, index) => const Icon(
-                          Icons.star,
-                          color: Colors.amber,
+                ),
+                SpaceW(inputWidth: 15),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.merchant!.name ?? '',
+                      style: TextStyle(
+                          color: AppColors.fontColor,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SpaceH(inputHeigth: 10),
+                    Row(
+                      children: [
+                        RatingBarIndicator(
+                          rating: product.merchant!.rate!.toDouble(),
+                          itemBuilder: (context, index) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          itemCount: 5,
+                          itemSize: 18.sp,
+                          direction: Axis.horizontal,
                         ),
-                        itemCount: 5,
-                        itemSize: 18.sp,
-                        direction: Axis.horizontal,
-                      ),
-                      Text(
-                        '(${product.merchant!.rateCount})',
-                        style: TextStyle(
-                            color: AppColors.GrayColor112,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  SpaceH(inputHeigth: 10),
-                  InkWell(
-                    onTap: () {
-                      if (AppStorage.isLogged) {
-                        MagicRouter.navigateTo(MarketDetailsScreen(
-                          marketId: product.merchant!.id!,
-                        ));
-                      } else {
-                        showSnackBar(
-                          AppStrings.pleaseLogin.translate(),
-                          pleaseLogin: true,
-                        );
-                      }
-                    },
-                    child: Row(
+                        Text(
+                          '(${product.merchant!.rateCount})',
+                          style: TextStyle(
+                              color: AppColors.GrayColor112,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SpaceH(inputHeigth: 10),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -116,12 +115,12 @@ class MarketWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

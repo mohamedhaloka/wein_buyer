@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/models/products_provider_model.dart';
+import 'package:wein_buyer/view/user/productDetails/presentation/screen/image_view.dart';
 import 'package:wein_buyer/widgets/video_thumbnail_widget.dart';
 
 import '../core/utils/app_colors.dart';
@@ -55,9 +56,16 @@ class ProductItem extends StatelessWidget {
                                   .files![index].type ==
                               'video'
                           ? VideoThumbnailWidget(productData.files![index].file)
-                          : CustomNetworkImage(
-                              url: productData.files![index].file ?? '',
-                            ),
+                          : InkWell(
+                        onTap:()=> Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ImageView(
+                              img: productData
+                                  .files![index].file ??'',
+                            ))),
+                            child: CustomNetworkImage(
+                                url: productData.files![index].file ?? '',
+                              ),
+                          ),
                       itemCount: productData.files?.length ?? 0,
                     ),
                   ),

@@ -64,6 +64,10 @@ class CurrenciesBody extends StatelessWidget {
                             null) {
                           AppStorage.cacheSelectedUserCurrency(
                               PagesCubit.of(context).selectedCurrenciesModel!);
+                          AppStorage.cacheCurrency(PagesCubit.of(context)
+                                  .selectedCurrenciesModel
+                                  ?.id ??
+                              0);
                           MagicRouter.navigateAndPopAll(
                               BottomNavUserScreen(selectedIndex: 0));
                         }

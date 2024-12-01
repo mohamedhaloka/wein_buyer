@@ -4,7 +4,8 @@ class CurrenciesModel {
   int? notificationCount;
   List<Currency>? body;
 
-  CurrenciesModel({this.success, this.message, this.notificationCount, this.body});
+  CurrenciesModel(
+      {this.success, this.message, this.notificationCount, this.body});
 
   CurrenciesModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
@@ -12,7 +13,9 @@ class CurrenciesModel {
     notificationCount = json['notification_count'];
     if (json['body'] != null) {
       body = <Currency>[];
-      json['body'].forEach((v) { body!.add(Currency.fromJson(v)); });
+      json['body'].forEach((v) {
+        body!.add(Currency.fromJson(v));
+      });
     }
   }
 
@@ -37,7 +40,13 @@ class Currency {
   String? updatedAt;
   bool? isSelected;
 
-  Currency({this.id, this.name, this.code, this.exchangeRate, this.createdAt, this.updatedAt});
+  Currency(
+      {this.id,
+      this.name,
+      this.code,
+      this.exchangeRate,
+      this.createdAt,
+      this.updatedAt});
 
   Currency.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -59,4 +68,12 @@ class Currency {
     data['updated_at'] = updatedAt;
     return data;
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is Currency && id == other.id;
+  }
+
+  @override
+  int get hashCode => this.id.hashCode;
 }

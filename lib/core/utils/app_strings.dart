@@ -319,6 +319,8 @@ class AppStrings {
   static const String enterReturnPolicyScreen = 'enterReturnPolicyScreen';
   static const String saveEdite = 'saveEdite';
   static const String settingsMarketBody = 'settingsMarketBody';
+  static const String invalidDiscount = 'invalidDiscount';
+  static const String invalid = 'invalid';
   static const String costDeliveryMarketBody = 'costDeliveryMarketBody';
   static const String mapMarketBody = 'mapMarketBody';
   static const String addMap = 'addMap';

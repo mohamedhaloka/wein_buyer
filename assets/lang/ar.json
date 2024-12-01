@@ -31,6 +31,8 @@
   "selectLang": "تحديد اللغه",
   "logoutMsg": "تم تسجيل الخروج!",
   "deleteAccountMsg": "تم حذف الحساب بنجاح!",
+  "invalidDiscount": "قيمة خصم خطأ",
+  "invalid": "غير صحيح",
   "contactUsMsg": "تم ارسال رسالتك بنجاح",
   "addProductMsg": "تم اضافه المنتج بنجاح",
   "editProductMsg": "تم تعديل المنتج بنجاح",

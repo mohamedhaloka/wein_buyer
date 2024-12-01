@@ -58,6 +58,11 @@ abstract class AppStorage {
     return null;
   }
 
+  static int? get currency {
+    if (_box.hasData('currency')) return _box.read('currency');
+    return null;
+  }
+
   static bool get isLogged {
     if(getUserInfo != null || getUserProviderInfo != null){
       return true;
@@ -73,6 +78,9 @@ abstract class AppStorage {
 
   static Future<void> cacheUserInfo(UserUserModel userModel) =>
       _box.write('user', userModel.toJson());
+
+  static Future<void> cacheCurrency(int currencyId) =>
+      _box.write('currency', currencyId);
 
   static Future<void> cacheUserProviderInfo(UserProviderModel userModel) =>
       _box.write('userProvider', userModel.toJson());
