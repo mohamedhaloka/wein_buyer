@@ -11,7 +11,7 @@ class LoginUserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginUserCubit(sl()),
+      create: (context) => LoginUserCubit(sl())..getInitialData(),
       child: const Scaffold(
         body: LoginUserBody(),
       ),

@@ -94,6 +94,10 @@ class RegisterCubit extends Cubit<RegisterState> {
           emit(RegisterLoaded());
           await AppStorage.cacheUserProviderInfo(res);
           await AppStorage.cacheUserType(0);
+          AppStorage.cacheSecureProviderLoginCredential(
+            email: emailController.text,
+            password: passwordController.text,
+          );
           MagicRouter.navigateAndPopAll(BottomNavProviderScreen(
             selectedIndex: 0,
           ));

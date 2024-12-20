@@ -98,7 +98,7 @@
   "productName": "اسم المنتج",
   "productDesc": "وصف المنتج",
   "productPrice": "سعر المنتج",
-  "discountValue": "قيمة الخصم",
+  "discountValue": "نسبة الخصم",
   "addImages": "اضافة صور المنتج",
   "productAfterPrice": "السعر بعد الخصم",
   "addSizeGuide": "اضافة صورة دليل المقاس",

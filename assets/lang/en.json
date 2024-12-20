@@ -98,7 +98,7 @@
   "productName": "Product Name",
   "productDesc": "Product Description",
   "productPrice": "Product Price",
-  "discountValue": "Discount Value",
+  "discountValue": "Discount Percentage",
   "addImages": "Add product images",
   "productAfterPrice": "Price After Discount",
   "addSizeGuide": "Add Size Guide Image",

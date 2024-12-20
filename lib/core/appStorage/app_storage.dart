@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
 import 'package:wein_buyer/core/models/currencies_model.dart';
@@ -11,6 +12,7 @@ import '../router/router.dart';
 
 abstract class AppStorage {
   static final GetStorage _box = GetStorage();
+  static const _secureStorage = FlutterSecureStorage();
 
   static Future<void> init() async => await GetStorage.init();
 
@@ -20,18 +22,17 @@ abstract class AppStorage {
   }
 
   static UserProviderModel? get getUserProviderInfo {
-    if (_box.hasData('userProvider'))
+    if (_box.hasData('userProvider')) {
       return UserProviderModel.fromJson(_box.read('userProvider'));
+    }
     return null;
   }
 
   static Currency? get getSelectedUserCurrency {
     if (_box.hasData('getSelectedUserCurrency')) {
       return Currency.fromJson(_box.read('getSelectedUserCurrency'));
-    }else{
-      return Currency(
-        code: 'EGP'
-      );
+    } else {
+      return Currency(code: 'EGP');
     }
   }
 
@@ -41,9 +42,9 @@ abstract class AppStorage {
   }
 
   static String? get getLang {
-    if (_box.hasData('lang')){
+    if (_box.hasData('lang')) {
       return _box.read('lang');
-    }else{
+    } else {
       return 'ar';
     }
   }
@@ -64,9 +65,9 @@ abstract class AppStorage {
   }
 
   static bool get isLogged {
-    if(getUserInfo != null || getUserProviderInfo != null){
+    if (getUserInfo != null || getUserProviderInfo != null) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -78,6 +79,43 @@ abstract class AppStorage {
 
   static Future<void> cacheUserInfo(UserUserModel userModel) =>
       _box.write('user', userModel.toJson());
+
+  static Future<void> cacheSecureProviderLoginCredential({
+    required String email,
+    required String password,
+  }) async {
+    await _secureStorage.write(key: 'provider_email', value: email);
+    await _secureStorage.write(key: 'provider_password', value: password);
+  }
+
+  static Future<UserLoginData> getProviderLoginCredential() async {
+    final email = (await _secureStorage.read(key: 'provider_email')) ?? '';
+    final password =
+        (await _secureStorage.read(key: 'provider_password')) ?? '';
+
+    return UserLoginData(
+      email: email,
+      password: password,
+    );
+  }
+
+  static Future<UserLoginData> getClientLoginCredential() async {
+    final email = (await _secureStorage.read(key: 'client_email')) ?? '';
+    final password = (await _secureStorage.read(key: 'client_password')) ?? '';
+
+    return UserLoginData(
+      email: email,
+      password: password,
+    );
+  }
+
+  static Future<void> cacheSecureClientLoginCredential({
+    required String email,
+    required String password,
+  }) async {
+    await _secureStorage.write(key: 'client_email', value: email);
+    await _secureStorage.write(key: 'client_password', value: password);
+  }
 
   static Future<void> cacheCurrency(int currencyId) =>
       _box.write('currency', currencyId);
@@ -91,8 +129,7 @@ abstract class AppStorage {
   static Future<void> cachePasswordUserInfo(String passwoed) =>
       _box.write('password', passwoed);
 
-  static Future<void> cacheLang(String lang) =>
-      _box.write('lang', lang);
+  static Future<void> cacheLang(String lang) => _box.write('lang', lang);
 
   static Future<void> cacheUserType(int userType) =>
       _box.write('userType', userType);
@@ -133,4 +170,13 @@ abstract class AppStorage {
     MagicRouter.navigateAndPopAll(const SelectUserScreen());
     showSnackBar(AppStrings.deleteAccountMsg.translate());
   }
+}
+
+class UserLoginData {
+  final String email;
+  final String password;
+  const UserLoginData({
+    required this.email,
+    required this.password,
+  });
 }

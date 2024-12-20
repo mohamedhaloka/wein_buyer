@@ -32,8 +32,11 @@ showSnackBar(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
       ),
-      content: InkWell(
-        onTap: massage == 'unauthenticated' ? AppStorage.signOut : null,
+      content: GestureDetector(
+        onTap: () {
+          AppStorage.signOut();
+          MagicRouter.navigateAndPopAll(const SelectUserScreen());
+        },
         child: Text(snackBarMessage),
       ),
       action: pleaseLogin

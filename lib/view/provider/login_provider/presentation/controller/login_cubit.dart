@@ -21,6 +21,15 @@ class LoginCubit extends Cubit<LoginState> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  void getInitialData() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final userData = await AppStorage.getProviderLoginCredential();
+
+      emailController.text = userData.email;
+      passwordController.text = userData.password;
+    });
+  }
+
   Future login(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       emit(LoginLoading());
@@ -38,6 +47,10 @@ class LoginCubit extends Cubit<LoginState> {
           await AppStorage.cacheOpenStatus(res.user!.user!.open ?? false);
           String lang = context.read<LangCubit>().state.locale.languageCode;
           await AppStorage.cacheLang(lang);
+          AppStorage.cacheSecureProviderLoginCredential(
+            email: emailController.text,
+            password: passwordController.text,
+          );
           MagicRouter.navigateAndPopAll(BottomNavProviderScreen(selectedIndex: 0,));
         },
       );

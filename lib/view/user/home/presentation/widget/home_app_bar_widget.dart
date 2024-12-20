@@ -8,6 +8,7 @@ import 'package:wein_buyer/core/router/router.dart';
 import 'package:wein_buyer/core/utils/app_colors.dart';
 import 'package:wein_buyer/core/utils/app_sizes.dart';
 import 'package:wein_buyer/view/notification/presentation/screen/notification_screen.dart';
+import 'package:wein_buyer/view/select_user/presentation/screens/select_user_screen.dart';
 import 'package:wein_buyer/view/user/addresses/presentation/controller/addresses_cubit.dart';
 import 'package:wein_buyer/view/user/addresses/presentation/screen/addresses_screen.dart';
 import 'package:wein_buyer/view/user/products/presentation/controller/products_cubit.dart';
@@ -33,36 +34,35 @@ class HomeAppBarWidget extends StatelessWidget {
       child: Column(
         children: [
           SpaceH(inputHeigth: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                onTap: () {
-                  if (AppStorage.isLogged) {
-                    AddressesCubit.of(context).listOfAddress.isEmpty
-                        ? MagicRouter.navigateTo(const AddressesScreen())
-                        : showModalBottomSheet<void>(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(25),
-                              ),
-                            ),
-                            builder: (BuildContext conxt) {
-                              return BlocProvider.value(
-                                value: AddressesCubit.of(context),
-                                child: const BottomSheetListOfAddressWidget(),
-                              );
-                            },
-                          );
-                  } else {
-                    showSnackBar(AppStrings.pleaseLogin.translate(),
-                        pleaseLogin: true);
-                  }
-                },
-                child: Column(
+          InkWell(
+            onTap: () {
+              if (AppStorage.isLogged) {
+                AddressesCubit.of(context).listOfAddress.isEmpty
+                    ? MagicRouter.navigateTo(const AddressesScreen())
+                    : showModalBottomSheet<void>(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25),
+                    ),
+                  ),
+                  builder: (BuildContext conxt) {
+                    return BlocProvider.value(
+                      value: AddressesCubit.of(context),
+                      child: const BottomSheetListOfAddressWidget(),
+                    );
+                  },
+                );
+              } else {
+                MagicRouter.navigateAndPopAll(const SelectUserScreen());
+              }
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
@@ -118,35 +118,35 @@ class HomeAppBarWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              InkWell(
-                onTap: () {
-                  if (AppStorage.isLogged) {
-                    MagicRouter.navigateTo(const NotificationScreen());
-                  } else {
-                    showSnackBar(AppStrings.pleaseLogin.translate(),
-                        pleaseLogin: true);
-                  }
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: AppSizes.getProportionateScreenHeight(5),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(
-                        AppSizes.getProportionateScreenWidth(12)),
-                    decoration: BoxDecoration(
-                      color: AppColors.transparntColor255.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(15),
+                InkWell(
+                  onTap: () {
+                    if (AppStorage.isLogged) {
+                      MagicRouter.navigateTo(const NotificationScreen());
+                    } else {
+                      showSnackBar(AppStrings.pleaseLogin.translate(),
+                          pleaseLogin: true);
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: AppSizes.getProportionateScreenHeight(5),
                     ),
-                    child: const Icon(
-                      Icons.notifications,
-                      color: Colors.white,
+                    child: Container(
+                      padding: EdgeInsets.all(
+                          AppSizes.getProportionateScreenWidth(12)),
+                      decoration: BoxDecoration(
+                        color: AppColors.transparntColor255.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: const Icon(
+                        Icons.notifications,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SpaceH(inputHeigth: 5),
           BlocBuilder<ProductsCubit, ProductsState>(
