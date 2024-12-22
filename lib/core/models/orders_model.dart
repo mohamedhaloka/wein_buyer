@@ -177,7 +177,7 @@ class Items {
     name = json['name'];
     image = json['image'].cast<String>();
     price = json['price'];
-    quantity = json['quantity'];
+    quantity = int.tryParse(json['quantity']?.toString() ?? '0') ?? 0;
     details =
         json['details'] != null ? Details.fromJson(json['details']) : null;
   }

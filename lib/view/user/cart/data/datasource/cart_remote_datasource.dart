@@ -76,8 +76,10 @@ class CartRemoteDatasource extends BaseCartRemoteDatasource {
 
   @override
   Future<Cart> getCart() async {
+    const url = "${AppStrings.baseurl}${AppStrings.endpointCart}";
+    print(url);
     final response = await DioHelper.get(
-      "${AppStrings.baseurl}${AppStrings.endpointCart}",
+      url
     );
     if (response.data['success'] == true) {
       if (kDebugMode) {

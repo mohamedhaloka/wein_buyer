@@ -76,7 +76,7 @@ class Items {
     itemId = json['item_id'];
     product =
         json['product'] != null ? Product.fromJson(json['product']) : null;
-    quantity = json['quantity'];
+    quantity = int.tryParse(json['quantity']?.toString() ?? '0') ??0;
     price = json['price'];
     properties = json['properties'] != null
         ? Properties.fromJson(json['properties'])

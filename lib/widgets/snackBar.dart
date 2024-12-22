@@ -33,10 +33,12 @@ showSnackBar(
         borderRadius: BorderRadius.circular(5),
       ),
       content: GestureDetector(
-        onTap: () {
-          AppStorage.signOut();
-          MagicRouter.navigateAndPopAll(const SelectUserScreen());
-        },
+        onTap: pleaseLogin
+            ? () {
+                AppStorage.signOut();
+                MagicRouter.navigateAndPopAll(const SelectUserScreen());
+              }
+            : null,
         child: Text(snackBarMessage),
       ),
       action: pleaseLogin
