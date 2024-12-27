@@ -113,7 +113,7 @@ class SectionsAndProductsWidget extends StatelessWidget {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               mainAxisExtent:
-                                  AppSizes.getProportionateScreenHeight(260),
+                                  AppSizes.getProportionateScreenHeight(280),
                             ),
                             itemCount: listOfProduct.length,
                             itemBuilder: (ctx, index) {

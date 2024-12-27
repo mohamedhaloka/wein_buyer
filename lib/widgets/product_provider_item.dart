@@ -57,15 +57,17 @@ class ProductItem extends StatelessWidget {
                               'video'
                           ? VideoThumbnailWidget(productData.files![index].file)
                           : InkWell(
-                        onTap:()=> Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ImageView(
-                              img: productData
-                                  .files![index].file ??'',
-                            ))),
-                            child: CustomNetworkImage(
+                              onTap: () =>
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ImageView(
+                                            img: productData
+                                                    .files![index].file ??
+                                                '',
+                                          ))),
+                              child: CustomNetworkImage(
                                 url: productData.files![index].file ?? '',
                               ),
-                          ),
+                            ),
                       itemCount: productData.files?.length ?? 0,
                     ),
                   ),

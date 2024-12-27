@@ -26,7 +26,7 @@ class MarketBody extends StatelessWidget {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    HeaderMarketWidget(),
+                    const HeaderMarketWidget(),
                     const TabSectionsWidget(),
                     SpaceH(inputHeigth: 10),
                     marketCubit.tabMarket == TabMarket.marketDetails

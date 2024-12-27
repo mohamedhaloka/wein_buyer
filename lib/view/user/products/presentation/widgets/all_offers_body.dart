@@ -40,7 +40,7 @@ class AllOffersBody extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisExtent: AppSizes.getProportionateScreenHeight(270),
+                  mainAxisExtent: AppSizes.getProportionateScreenHeight(280),
                 ),
                 itemCount: ProductsCubit.of(context).listOfOffers.length,
                 itemBuilder: (BuildContext ctx, index) {

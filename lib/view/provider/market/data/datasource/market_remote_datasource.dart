@@ -96,7 +96,8 @@ class MarketRemoteDatasource extends BaseMarketRemoteDatasource {
 
   @override
   Future<MyRatesModel> getMyRate() async {
-    final response = await DioHelper.get("${AppStrings.baseurlMerchant}${AppStrings.endpointMyRates}");
+    final response = await DioHelper.get(
+        "${AppStrings.baseurlMerchant}${AppStrings.endpointMyRates}");
     if (response.data['success'] == true) {
       if (kDebugMode) {
         print("Success getMyRate");
@@ -128,8 +129,11 @@ class MarketRemoteDatasource extends BaseMarketRemoteDatasource {
   @override
   Future<bool> editMarketDetails(
       EditMarketDetailsModel editMarketDetailsModel) async {
-    final response = await DioHelper.post("${AppStrings.baseurlMerchant}${AppStrings.endpointEditMarketDetails}",
-        body: await editMarketDetailsModel.toJson());
+    final data = await editMarketDetailsModel.toJson();
+    final response = await DioHelper.post(
+      "${AppStrings.baseurlMerchant}${AppStrings.endpointEditMarketDetails}",
+      body: data,
+    );
     if (response.data['success'] == true) {
       if (kDebugMode) {
         print("Success editMarketDetails");

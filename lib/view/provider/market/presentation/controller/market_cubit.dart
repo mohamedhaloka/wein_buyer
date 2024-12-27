@@ -84,6 +84,7 @@ class MarketCubit extends Cubit<MarketState> {
       },
       (res) async {
         profileModel = res.body;
+
         emit(GetHeaderDataLoaded());
       },
     );
@@ -204,19 +205,6 @@ class MarketCubit extends Cubit<MarketState> {
 
         titleController.clear();
         MagicRouter.pop();
-        // showModalBottomSheet<void>(
-        //   context: context,
-        //   isDismissible: false,
-        //   isScrollControlled: true,
-        //   shape: const RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.vertical(
-        //       top: Radius.circular(25),
-        //     ),
-        //   ),
-        //   builder: (BuildContext context) {
-        //     return const EditMarketDetailsBottomSheet();
-        //   },
-        // );
         emit(EditMarketDetailsLoaded());
       },
     );
@@ -259,19 +247,6 @@ class MarketCubit extends Cubit<MarketState> {
         aboutUsController.clear();
         MagicRouter.pop();
 
-        // showModalBottomSheet<void>(
-        //   context: context,
-        //   isDismissible: false,
-        //   isScrollControlled: true,
-        //   shape: const RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.vertical(
-        //       top: Radius.circular(25),
-        //     ),
-        //   ),
-        //   builder: (BuildContext context) {
-        //     return const EditMarketDetailsBottomSheet();
-        //   },
-        // );
         emit(EditMarketDetailsLoaded());
       },
     );
@@ -288,20 +263,6 @@ class MarketCubit extends Cubit<MarketState> {
         emit(MarketInitial());
       },
       (res) async {
-        MagicRouter.pop();
-        // showModalBottomSheet<void>(
-        //   context: context,
-        //   isDismissible: false,
-        //   isScrollControlled: true,
-        //   shape: const RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.vertical(
-        //       top: Radius.circular(25),
-        //     ),
-        //   ),
-        //   builder: (BuildContext context) {
-        //     return const EditMarketDetailsBottomSheet();
-        //   },
-        // );
         emit(EditMarketDetailsLoaded());
       },
     );
@@ -318,20 +279,6 @@ class MarketCubit extends Cubit<MarketState> {
         emit(MarketInitial());
       },
       (res) async {
-        MagicRouter.pop();
-        // showModalBottomSheet<void>(
-        //   context: context,
-        //   isDismissible: false,
-        //   isScrollControlled: true,
-        //   shape: const RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.vertical(
-        //       top: Radius.circular(25),
-        //     ),
-        //   ),
-        //   builder: (BuildContext context) {
-        //     return const EditMarketDetailsBottomSheet();
-        //   },
-        // );
         emit(EditMarketDetailsLoaded());
       },
     );
@@ -360,20 +307,6 @@ class MarketCubit extends Cubit<MarketState> {
         );
         profileModel = profileModel?.copyWith(user: user);
 
-        // showModalBottomSheet<void>(
-        //   context: context,
-        //   isDismissible: false,
-        //   isScrollControlled: true,
-        //   shape: const RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.vertical(
-        //       top: Radius.circular(25),
-        //     ),
-        //   ),
-        //   builder: (BuildContext context) {
-        //     return const EditMarketDetailsBottomSheet();
-        //   },
-        // );
-
         emit(EditMarketDetailsLoaded());
       },
     );
@@ -383,25 +316,16 @@ class MarketCubit extends Cubit<MarketState> {
     File? image = await AppFunc.getImage();
     if (image != null) {
       this.image = image;
-      // showModalBottomSheet(
-      //   context: context,
-      //   isScrollControlled: true,
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(10),
-      //   ),
-      //   builder: (BuildContext cont) {
-      //     return BlocProvider.value(
-      //       value: MarketCubit.of(context),
-      //       child: const EditImageMarketBottomSheet(),
-      //     );
-      //   },
-      // );
+
       final user = profileModel?.user?.copyWith(
         localImage: image,
       );
       profileModel = profileModel?.copyWith(user: user);
 
       emit(SelectedImageState());
+
+      if (!context.mounted) return;
+      editImageMarket(context);
     }
   }
 
@@ -415,20 +339,10 @@ class MarketCubit extends Cubit<MarketState> {
       );
       profileModel = profileModel?.copyWith(user: user);
 
-      // showModalBottomSheet(
-      //   context: context,
-      //   isScrollControlled: true,
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(10),
-      //   ),
-      //   builder: (BuildContext cont) {
-      //     return BlocProvider.value(
-      //       value: MarketCubit.of(context),
-      //       child: const EditHeaderMarketBottomSheet(),
-      //     );
-      //   },
-      // );
       emit(SelectedHeaderState());
+
+      if (!context.mounted) return;
+      editHeaderMarket(context);
     }
   }
 
