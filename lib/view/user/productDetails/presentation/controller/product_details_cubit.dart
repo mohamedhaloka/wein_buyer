@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
+import 'package:wein_buyer/core/router/router.dart';
+import 'package:wein_buyer/view/user/bottom_nav_user/presentation/screens/bottom_nav_user_screen.dart';
 
 import '../../../../../../../core/models/categories_item_model.dart';
 import '../../../../../../../core/models/market_details_model.dart';
@@ -134,7 +136,12 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
         emit(AddToCartError());
       },
       (res) async {
-        showSnackBar('تم اضافه المنتج في السله');
+        showSnackBar(
+          'تم اضافه المنتج في السله',
+          onTap: () {
+            MagicRouter.navigateAndPopAll(BottomNavUserScreen(selectedIndex: 1,));
+          },
+        );
         emit(AddToCartLoaded());
       },
     );

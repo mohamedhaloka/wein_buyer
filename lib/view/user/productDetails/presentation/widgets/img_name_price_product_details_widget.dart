@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
+import 'package:wein_buyer/view/user/productDetails/presentation/screen/media_view.dart';
 import 'package:wein_buyer/widgets/space_height.dart';
 import 'package:wein_buyer/widgets/video_thumbnail_widget.dart';
 
@@ -60,9 +61,27 @@ class _ImgNamePriceProductDetailsWidgetState
                         },
                       ),
                       items: widget.product.product!.files!.map((item) {
-                        return item.type == 'video'
-                            ? VideoThumbnailWidget(item.file)
-                            : ImageItem(item: item);
+                        return InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => MediaView(
+                                  items: (widget.product.product?.files ?? [])
+                                      .map((e) {
+                                    if (e.type == 'video') {
+                                      return MediaItem.video(src: e.file!);
+                                    }
+
+                                    return MediaItem.img(src: e.file!);
+                                  }).toList(),
+                                ),
+                              ),
+                            );
+                          },
+                          child: item.type == 'video'
+                              ? VideoThumbnailWidget(item.file)
+                              : ImageItem(item: item),
+                        );
                       }).toList(),
                     ),
                   ),
@@ -222,16 +241,19 @@ class _ImgNamePriceProductDetailsWidgetState
                   ),
                 ],
               ),
-              SpaceW(inputWidth: 5),
-              Text(
-                '${widget.product.product!.price!.toDouble().toStringAsFixed(2)} ${widget.product.product!.currency}',
-                style: TextStyle(
-                  decoration: TextDecoration.lineThrough,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
+              if (widget.product.product!.price !=
+                  widget.product.product!.priceAfterDiscount) ...[
+                SpaceW(inputWidth: 5),
+                Text(
+                  '${widget.product.product!.price!.toDouble().toStringAsFixed(2)} ${widget.product.product!.currency}',
+                  style: TextStyle(
+                    decoration: TextDecoration.lineThrough,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
+              ],
             ],
           ),
         ],

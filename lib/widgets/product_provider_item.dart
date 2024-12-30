@@ -5,6 +5,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/models/products_provider_model.dart';
 import 'package:wein_buyer/view/user/productDetails/presentation/screen/image_view.dart';
+import 'package:wein_buyer/view/user/productDetails/presentation/screen/media_view.dart';
 import 'package:wein_buyer/widgets/video_thumbnail_widget.dart';
 
 import '../core/utils/app_colors.dart';
@@ -52,22 +53,24 @@ class ProductItem extends StatelessWidget {
                     child: CarouselSlider.builder(
                       options: CarouselOptions(
                           height: AppSizes.getProportionateScreenHeight(160)),
-                      itemBuilder: (context, index, realIndex) => productData
-                                  .files![index].type ==
-                              'video'
-                          ? VideoThumbnailWidget(productData.files![index].file)
-                          : InkWell(
-                              onTap: () =>
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => ImageView(
-                                            img: productData
-                                                    .files![index].file ??
-                                                '',
-                                          ))),
-                              child: CustomNetworkImage(
+                      itemBuilder: (context, index, realIndex) => InkWell(
+                        onTap: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => MediaView(
+                                      items: (productData.files ?? []).map((e) {
+                                        if (e.type == 'video') {
+                                          return MediaItem.video(src: e.file!);
+                                        }
+                                        return MediaItem.img(src: e.file!);
+                                      }).toList(),
+                                    ))),
+                        child: productData.files![index].type == 'video'
+                            ? VideoThumbnailWidget(
+                                productData.files![index].file)
+                            : CustomNetworkImage(
                                 url: productData.files![index].file ?? '',
                               ),
-                            ),
+                      ),
                       itemCount: productData.files?.length ?? 0,
                     ),
                   ),
@@ -114,30 +117,32 @@ class ProductItem extends StatelessWidget {
                         ],
                       ),
                       SpaceW(inputWidth: 5),
-                      productData.discount == 0
-                          ? const SizedBox()
-                          : Row(
-                              children: [
-                                Text(
-                                  (productData.price ?? 0.0).toString(),
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                Text(
-                                  productData.currency ?? '',
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
+                      if(productData.priceAfterDiscount != productData.price)...[
+
+
+                        Row(
+                          children: [
+                            Text(
+                              (productData.price ?? 0.0).toString(),
+                              style: TextStyle(
+                                decoration: TextDecoration.lineThrough,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
                             ),
+                            Text(
+                              productData.currency ?? '',
+                              style: TextStyle(
+                                decoration: TextDecoration.lineThrough,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        )
+                      ]
                     ],
                   ),
                 ],

@@ -9,6 +9,7 @@ import 'package:wein_buyer/core/router/router.dart';
 import 'package:wein_buyer/core/utils/app_func.dart';
 import 'package:wein_buyer/core/utils/app_strings.dart';
 import 'package:wein_buyer/view/user/productDetails/presentation/screen/image_view.dart';
+import 'package:wein_buyer/view/user/productDetails/presentation/screen/media_view.dart';
 
 import '../../../../../../../core/utils/app_colors.dart';
 import '../../../../../../../core/utils/app_sizes.dart';
@@ -74,9 +75,14 @@ class ImagesEditProduct extends StatelessWidget {
                         listOfImagesNetwork[index].type!.split('.').last !=
                                 'video'
                             ? InkWell(
-                                onTap: () => MagicRouter.navigateTo(ImageView(
-                                    img:
-                                        listOfImagesNetwork[index].file ?? '')),
+                                onTap: () => MagicRouter.navigateTo(MediaView(
+                                  items: listOfImagesNetwork.map((e) {
+                                    if (e.type == 'video') {
+                                      return MediaItem.video(src: e.file!);
+                                    }
+                                    return MediaItem.img(src: e.file!);
+                                  }).toList(),
+                                )),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -101,9 +107,14 @@ class ImagesEditProduct extends StatelessWidget {
                                 ),
                               )
                             : InkWell(
-                                onTap: () => MagicRouter.navigateTo(VideoView(
-                                    videoUrl:
-                                        listOfImagesNetwork[index].file ?? '')),
+                                onTap: () => MagicRouter.navigateTo(MediaView(
+                                  items: listOfImagesNetwork.map((e) {
+                                    if (e.type == 'video') {
+                                      return MediaItem.video(src: e.file!);
+                                    }
+                                    return MediaItem.img(src: e.file!);
+                                  }).toList(),
+                                )),
                                 child: Container(
                                   margin: EdgeInsets.symmetric(
                                     horizontal:
@@ -161,9 +172,16 @@ class ImagesEditProduct extends StatelessWidget {
                       children: [
                         !AppFunc.checkIsVideo(path: listOfImages[index].path)
                             ? InkWell(
-                                onTap: () => MagicRouter.navigateTo(ImageView(
-                                    img:
-                                        listOfImagesNetwork[index].file ?? '')),
+                                onTap: () => MagicRouter.navigateTo(
+                                  MediaView(
+                                    items: listOfImagesNetwork.map((e) {
+                                      if (e.type == 'video') {
+                                        return MediaItem.video(src: e.file!);
+                                      }
+                                      return MediaItem.img(src: e.file!);
+                                    }).toList(),
+                                  ),
+                                ),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -188,9 +206,16 @@ class ImagesEditProduct extends StatelessWidget {
                                 ),
                               )
                             : InkWell(
-                                onTap: () => MagicRouter.navigateTo(VideoView(
-                                    videoUrl:
-                                        listOfImagesNetwork[index].file ?? '')),
+                                onTap: () => MagicRouter.navigateTo(
+                                  MediaView(
+                                    items: listOfImagesNetwork.map((e) {
+                                      if (e.type == 'video') {
+                                        return MediaItem.video(src: e.file!);
+                                      }
+                                      return MediaItem.img(src: e.file!);
+                                    }).toList(),
+                                  ),
+                                ),
                                 child: Container(
                                   margin: EdgeInsets.symmetric(
                                     horizontal:

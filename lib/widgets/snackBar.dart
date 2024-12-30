@@ -14,6 +14,7 @@ showSnackBar(
   duration = 5,
   Color color = AppColors.primaryColor,
   bool pleaseLogin = false,
+      void Function()? onTap,
 }) {
   String snackBarMessage = () {
     switch (massage) {
@@ -38,7 +39,7 @@ showSnackBar(
                 AppStorage.signOut();
                 MagicRouter.navigateAndPopAll(const SelectUserScreen());
               }
-            : null,
+            : onTap,
         child: Text(snackBarMessage),
       ),
       action: pleaseLogin

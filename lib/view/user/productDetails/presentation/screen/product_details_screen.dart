@@ -14,17 +14,17 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("??????????????? $productId");
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) =>
-          ProductDetailsCubit(sl(), sl(), sl(), sl(), sl(), sl())
-            ..getRelatedProducts(productId)
-            ..getProductDetails(productId),
+              ProductDetailsCubit(sl(), sl(), sl(), sl(), sl(), sl())
+                ..getRelatedProducts(productId)
+                ..getProductDetails(productId),
         ),
         BlocProvider(
-          create: (context) => AddressesCubit(sl(), sl(), sl(), sl(), sl())..getAddresses(),
+          create: (context) =>
+              AddressesCubit(sl(), sl(), sl(), sl(), sl())..getAddresses(),
         ),
       ],
       child: Scaffold(

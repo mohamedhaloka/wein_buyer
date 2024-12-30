@@ -23,8 +23,8 @@ class _ImageItemState extends State<ImageItem> {
   Widget build(BuildContext context) {
     if (widget.item.type == 'video') {
       return GestureDetector(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => VideoView(videoUrl: widget.item.file ?? ''))),
+        // onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => VideoView(videoUrl: widget.item.file ?? ''))),
         child: SizedBox(
           width: AppSizes.screenWidth,
           child: const Icon(
@@ -35,10 +35,10 @@ class _ImageItemState extends State<ImageItem> {
       );
     } else {
       return GestureDetector(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ImageView(
-                  img: widget.item.file ?? '',
-                ))),
+        // onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => ImageView(
+        //           img: widget.item.file ?? '',
+        //         ))),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: CachedNetworkImage(

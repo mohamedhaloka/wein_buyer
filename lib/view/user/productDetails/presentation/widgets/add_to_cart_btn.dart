@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/appStorage/app_storage.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
 import 'package:wein_buyer/core/models/product.dart';
+import 'package:wein_buyer/core/router/router.dart';
+import 'package:wein_buyer/view/user/addresses/presentation/screen/addresses_screen.dart';
 import 'package:wein_buyer/view/user/productDetails/presentation/controller/product_details_cubit.dart';
 import 'package:wein_buyer/widgets/loading_indicator.dart';
 
@@ -104,7 +106,17 @@ class AddToCartBTN extends StatelessWidget {
                                       .listOfAddress
                                       .isEmpty) {
                                     showSnackBar(
-                                        AppStrings.addANewAddress.translate());
+                                      AppStrings.addANewAddress.translate(),
+                                      onTap: () async {
+                                        await MagicRouter.navigateTo(
+                                            const AddressesScreen());
+
+                                        if (!context.mounted) return;
+                                        context
+                                            .read<AddressesCubit>()
+                                            .getAddresses();
+                                      },
+                                    );
                                     return;
                                   }
                                   String? lat = AddressesCubit.of(context)

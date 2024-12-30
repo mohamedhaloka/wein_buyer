@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wein_buyer/core/extentions/translate_ext.dart';
 import 'package:wein_buyer/core/router/router.dart';
 import 'package:wein_buyer/view/user/favorites/presentation/controller/favorites_cubit.dart';
+import 'package:wein_buyer/view/user/productDetails/presentation/screen/media_view.dart';
 import 'package:wein_buyer/view/user/productDetails/presentation/screen/product_details_screen.dart';
 import 'package:wein_buyer/widgets/space_height.dart';
 import 'package:wein_buyer/widgets/space_width.dart';
@@ -60,11 +61,28 @@ class ProductItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       child: CarouselSlider(
                         options: CarouselOptions(
-                            height: AppSizes.getProportionateScreenHeight(120)),
+                            height: AppSizes.getProportionateScreenHeight(100)),
                         items: product.files!.map((e) {
-                          return e.type == 'video'
-                              ? VideoThumbnailWidget(e.file)
-                              : CustomNetworkImage(url: e.file ?? '');
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => MediaView(
+                                    items: (product.files ?? []).map((e) {
+                                      if (e.type == 'video') {
+                                        return MediaItem.video(src: e.file!);
+                                      }
+
+                                      return MediaItem.img(src: e.file!);
+                                    }).toList(),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: e.type == 'video'
+                                ? VideoThumbnailWidget(e.file)
+                                : CustomNetworkImage(url: e.file ?? ''),
+                          );
                         }).toList(),
                       ),
                     ),
@@ -178,19 +196,21 @@ class ProductItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SpaceW(inputWidth: 5),
-                    Expanded(
-                      child: Text(
-                        '${product.price!.toDouble().toStringAsFixed(2)} ${product.currency}',
-                        maxLines: 1,
-                        style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
+                    if (product.price != product.priceAfterDiscount) ...[
+                      SpaceW(inputWidth: 5),
+                      Expanded(
+                        child: Text(
+                          '${product.price!.toDouble().toStringAsFixed(2)} ${product.currency}',
+                          maxLines: 1,
+                          style: TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
+                    ]
                   ],
                 ),
               ],
